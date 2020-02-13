@@ -2,14 +2,21 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    index:'./src/index.js',
+  },
   output: {
-    filename: 'main.js',
+    filename: 'main.[name].js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath:'/'
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
   },
   module: {
-    rules: [{
-        test: /\.js$/,
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
         use: [
           'babel-loader'
         ],
@@ -26,11 +33,20 @@ module.exports = {
         test: /\.json$/,
         use: ["json-loader"]
       },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
+      }
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'public/index.html'
+      template: 'public/index.html',
+      chunks: ["index"]
     }),
   ],
   devServer: {
