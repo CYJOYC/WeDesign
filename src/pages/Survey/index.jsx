@@ -148,6 +148,10 @@ const Survey = () => {
     );
   };
 
+  const deleteReference = (imageKey) => () => {
+
+  }
+
   let uploadImages;
   if (imageURLs.length !== 0) {
     const uploadImage = imageURLs.map(imageURL => (
@@ -157,7 +161,7 @@ const Survey = () => {
             {imageURL.fileName}
           </div>
           <div className="delete-upload-container">
-            <img className="delete-upload-picture" src={IconDelete} />
+            <img className="delete-upload-picture" src={IconDelete} onClick={deleteReference(imageURL.fileName)} ref={deleteReference}/>
           </div>
         </div>
         <div className="each-upload-details">

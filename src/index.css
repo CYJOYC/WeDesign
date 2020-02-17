@@ -631,6 +631,13 @@ border-bottom: 1px solid #e0e0e0 ;
 
 .project-information-details{
     margin-left: 2%;
+
+}
+
+.project-info-image{
+    width:30%;
+    /* height:300px; */
+    
 }
 .version-number{
     margin:5px 20%;
@@ -644,13 +651,25 @@ border-bottom: 1px solid #e0e0e0 ;
     margin:0 5%;
 }
 .main-design-background{
-    flex:1;
+    display: flex;
     justify-content: center;
 
 }
 .main-design-picture{
-    width: 80%;
-    margin: 0 auto;
+    margin:10% 0;
+    width:auto;
+    height:auto;
+    max-width: 80%;
+    max-height:80%;
+    
+    
+}
+
+.icon-pin{
+    align-self: flex-end;
+    width:40px;
+    height:40px;
+    cursor:pointer;
 }
 
 

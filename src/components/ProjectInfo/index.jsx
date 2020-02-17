@@ -18,13 +18,14 @@ const ProjectInfo = () => {
   if (context.project !== null) {
     //   if (location.search !== null) {
     console.log(context);
+    const URL = context.project.data.referenceImages[0].downloadURL
     projectFormat = 
     <>
     <div className="project-info-name">Project name:&nbsp;{context.project.data.name}</div>
     <div className="project-info-purpose">Project format:&nbsp;{context.project.data.purpose}</div>
     <div className="project-info-format">Project format:&nbsp;{context.project.data.format}</div>
     <a className="project-info-image">Project reference picture:</a><br/>
-    <img className="project-info-image" src={context.project.data.referenceImages.downloadURL}/>
+    <img className="project-info-image" src={URL}/>
     </>
 
     

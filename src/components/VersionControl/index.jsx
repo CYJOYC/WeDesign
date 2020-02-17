@@ -1,26 +1,35 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import firebase from "firebase/app";
 import "firebase/storage";
 import { VersionContext } from "../../contexts/Version";
 import { ProjectContext } from "../../contexts/ProjectID";
+import { UserContext } from "../../contexts/AuthContext";
+import { exists } from "fs";
 
 const VersionControl = () => {
-  const [versionURLs, setVersionURLs] = useState([]);
+  const db = firebase.firestore();
+  const [versionImages, setVersionImages] = useState([]);
   const context = useContext(ProjectContext);
-  
+  const userContext = useContext(UserContext);
+  const versionContext = useContext(VersionContext);
 
   let projectID;
   if (location.search.length == 21) {
     projectID = location.search.slice(1);
   }
-  const db = firebase.firestore();
-  const [projects, setProjects] = useState([{ title: "hello", id: 1 }]);
-  // const addTitle = (title)=> {
-  //     setProjects([...projects, {title, id:2}]);
-  // }
+
+  useEffect(() => {
+    const projectsRef = db.collection("projects").doc(projectID);
+    projectsRef.get().then(doc => {
+      if (doc.data().versionImages != undefined) {
+        setVersionImages(doc.data().versionImages);
+      }
+    });
+  }, [true]);
 
   const uploadFile = e => {
+    const uploader = userContext.userInfo.uid;
     const file = e.currentTarget.files[0];
     const metadata = {
       contentType: "image/jpeg"
@@ -39,42 +48,46 @@ const VersionControl = () => {
       function(error) {
         switch (error.code) {
           case "storage/unauthorized":
-            // User doesn't have permission to access the object
             break;
-
           case "storage/canceled":
-            // User canceled the upload
             break;
-
           case "storage/unknown":
-            // Unknown error occurred, inspect error.serverResponse
             break;
         }
       },
       function() {
-        let versionNumber = 1;
         // Upload completed successfully, now we can get the download URL
         uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
           console.log("File available at", downloadURL);
-          setVersionURLs({ version: versionNumber, imageURL: downloadURL });
-          console.log(projectID);
+          // console.log(versionImages);
           const dbLink = db.collection("projects").doc(projectID);
           dbLink
             .set(
               {
-                versionImg: {
-                  version: versionNumber,
-                  imageURL: downloadURL
-                }
+                versionImages: [
+                  ...versionImages,
+                  {
+                    uploader,
+                    uploadedTime: Date.now(),
+                    fileName: file.name,
+                    imageURL: downloadURL
+                  }
+                ]
               },
               { merge: true }
-            )
-            .then(function() {
-              versionNumber += 1;
-            })
-            .catch(function(error) {
+            ).catch(function(error) {
               console.error("Error writing document: ", error);
             });
+
+          setVersionImages([
+            ...versionImages,
+            {
+              uploader,
+              uploadedTime: Date.now(),
+              fileName: file.name,
+              imageURL: downloadURL
+            }
+          ]);
         });
       }
     );
@@ -82,34 +95,35 @@ const VersionControl = () => {
 
   const checkVersion = URL => {
     console.log(URL);
-    context.setShowVersion(URL);
+    versionContext.setShowVersion(URL);
   };
 
   let versionPart;
-  if (versionURLs.length !== 0) {
-    const URL = versionURLs.imageURL;
-    versionPart = (
-      <div className="version-each">
-        <div className="version-number">Version&nbsp;{versionURLs.version}</div>
+  if (versionImages.length != 0) {
+    const versionPartEach = versionImages.map(versionImage => (
+      <div className="version-each" key={versionImage.imageURL}>
+        <div className="">{versionImage.fileName}</div>
+        {/* <div className="version-date">{versionImage.uploadedTime}</div> */}
         <img
-          src={URL}
+          src={versionImage.imageURL}
           className="version-image"
-          onClick={checkVersion.bind(checkVersion, URL)}
+          onClick={checkVersion.bind(checkVersion, versionImage.imageURL)}
         />
       </div>
-    );
+    ));
+    versionPart = <>{versionPartEach}</>;
   }
 
   return (
     <React.Fragment>
       <div className="version-control-background">
-        {versionPart}
         <input
           type="file"
           className="fileButton"
           accept=".jpg,.jpeg,.png"
           onChange={uploadFile}
         />
+        {versionPart}
       </div>
     </React.Fragment>
   );
