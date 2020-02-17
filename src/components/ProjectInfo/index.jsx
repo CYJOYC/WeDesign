@@ -24,7 +24,7 @@ const ProjectInfo = () => {
     <div className="project-info-purpose">Project format:&nbsp;{context.project.data.purpose}</div>
     <div className="project-info-format">Project format:&nbsp;{context.project.data.format}</div>
     <a className="project-info-image">Project reference picture:</a><br/>
-    <img className="project-info-image" src={context.project.data.referenceURL.imageURL}/>
+    <img className="project-info-image" src={context.project.data.referenceImages.downloadURL}/>
     </>
 
     

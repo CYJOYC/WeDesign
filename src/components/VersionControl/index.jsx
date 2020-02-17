@@ -3,8 +3,13 @@ import { Link } from "react-router-dom";
 import firebase from "firebase/app";
 import "firebase/storage";
 import { VersionContext } from "../../contexts/Version";
+import { ProjectContext } from "../../contexts/ProjectID";
 
 const VersionControl = () => {
+  const [versionURLs, setVersionURLs] = useState([]);
+  const context = useContext(ProjectContext);
+  
+
   let projectID;
   if (location.search.length == 21) {
     projectID = location.search.slice(1);
@@ -14,9 +19,6 @@ const VersionControl = () => {
   // const addTitle = (title)=> {
   //     setProjects([...projects, {title, id:2}]);
   // }
-
-  const [versionURLs, setVersionURLs] = useState([]);
-  const context = useContext(VersionContext);
 
   const uploadFile = e => {
     const file = e.currentTarget.files[0];
@@ -62,7 +64,7 @@ const VersionControl = () => {
               {
                 versionImg: {
                   version: versionNumber,
-                  image: downloadURL
+                  imageURL: downloadURL
                 }
               },
               { merge: true }
@@ -78,23 +80,25 @@ const VersionControl = () => {
     );
   };
 
-  const checkVersion = (URL) => {
-      console.log(URL);
-    context.setShowVersion(URL)
-  }
-
-
+  const checkVersion = URL => {
+    console.log(URL);
+    context.setShowVersion(URL);
+  };
 
   let versionPart;
   if (versionURLs.length !== 0) {
-    const URL = versionURLs.imageURL
+    const URL = versionURLs.imageURL;
     versionPart = (
       <div className="version-each">
         <div className="version-number">Version&nbsp;{versionURLs.version}</div>
-        <img src={URL} className="version-image" onClick={checkVersion.bind(checkVersion, URL)}/>
+        <img
+          src={URL}
+          className="version-image"
+          onClick={checkVersion.bind(checkVersion, URL)}
+        />
       </div>
     );
-  } 
+  }
 
   return (
     <React.Fragment>

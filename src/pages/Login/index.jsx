@@ -23,6 +23,9 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
+  const [onSignin, setOnSignin] = useState({
+    onSignin: true
+  });
   const provider = new firebase.auth.GoogleAuthProvider();
 
   const handleClickRegister = event => {
@@ -96,71 +99,95 @@ const Login = () => {
       });
   };
 
-  return (
+  const handleToSignUp = () => {
+    setOnSignin({ onSignin: false });
+  };
+
+  const handleToSignIn = () => {
+    setOnSignin({ onSignin: true });
+  };
+
+  return onSignin.onSignin ? (
     <React.Fragment>
       <Header />
       <div className="signin">
-        <div className="signin-background">
-          <div className="signin-container">
-            <form onSubmit={handleClickRegister} className="register-form">
-              <div className="register-title-assistant">
-                Do not have an account?
-              </div>
-              <div className="register-title">Sign Up Here</div>
-              <label className="register-email form-title">Email </label>
-              <input
-                className="signin-form-input"
-                type="text"
-                name="email"
-                value={registerEmail}
-                onChange={e => setRegisterEmail(e.currentTarget.value)}
-              />
+        <div className="signin-container">
+          <form onSubmit={handleClickLogin} className="signin-form">
+            <div className="signin-title">Sign In</div>
+            <label className="signin-email form-title">Email </label>
+            <input
+              className="signin-form-input"
+              type="text"
+              name="email"
+              value={email}
+              onChange={e => setEmail(e.currentTarget.value)}
+            />
+            <label className="signin-password form-title">Password </label>
+            <input
+              className="signin-form-input"
+              type="text"
+              name="password"
+              value={password}
+              onChange={e => setPassword(e.currentTarget.value)}
+            />
 
-              <label className="register-password form-title">Password </label>
-              <input
-                className="signin-form-input"
-                type="text"
-                name="password"
-                value={registerPassword}
-                onChange={e => setRegisterPassword(e.currentTarget.value)}
-              />
+            <input type="submit" value="Sign In" className="signin-submit" />
+            <hr className="divider divider-or"></hr>
+            <div className="google-signin" onClick={handleGoogleSignin}>
+              <img src={googleIcon} className="google-icon" />
+              Sign In with Google
+            </div>
+            <div className="check-account-status-title">
+              Do not have an account?{" "}
+              <a
+                className="button-to-change-account-status"
+                onClick={handleToSignUp}
+              >
+                Sign Up Here
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+      <Footer />
+    </React.Fragment>
+  ) : (
+    <React.Fragment>
+      <Header />
+      <div className="signin">
+        <div className="signin-container">
+          <form onSubmit={handleClickRegister} className="register-form">
+            <div className="register-title">Sign Up</div>
+            <label className="register-email form-title">Email </label>
+            <input
+              className="signin-form-input"
+              type="text"
+              name="email"
+              value={registerEmail}
+              onChange={e => setRegisterEmail(e.currentTarget.value)}
+            />
 
-              <input
-                type="submit"
-                value="Sign Up"
-                className="register-submit"
-              />
-            </form>
+            <label className="register-password form-title">Password </label>
+            <input
+              className="signin-form-input"
+              type="text"
+              name="password"
+              value={registerPassword}
+              onChange={e => setRegisterPassword(e.currentTarget.value)}
+            />
 
-            <div className="signin-divider" />
-
-            <form onSubmit={handleClickLogin} className="signin-form">
-              <div className="signin-title">Sign In</div>
-              <label className="signin-email form-title">Email </label>
-              <input
-                className="signin-form-input"
-                type="text"
-                name="email"
-                value={email}
-                onChange={e => setEmail(e.currentTarget.value)}
-              />
-              <label className="signin-password form-title">Password </label>
-              <input
-                className="signin-form-input"
-                type="text"
-                name="password"
-                value={password}
-                onChange={e => setPassword(e.currentTarget.value)}
-              />
-
-              <input type="submit" value="Sign In" className="signin-submit" />
-              <hr class="divider divider-or"></hr>
-              <div className="google-signin" onClick={handleGoogleSignin}>
-                <img src={googleIcon} className="google-icon" />
-                Sign In with Google
-              </div>
-            </form>
+            <input type="submit" value="Sign Up" className="register-submit" />
+            <div className="check-account-status-title">
+            Already have an account?{" "}
+            <a
+              className="button-to-change-account-status"
+              onClick={handleToSignIn}
+            >
+              Sign In Here
+            </a>
           </div>
+          </form>
+          
         </div>
       </div>
       <Footer />
@@ -169,111 +196,3 @@ const Login = () => {
 };
 
 export default withRouter(Login);
-
-const Example = () => {
-  // const [ user, setUser ] = useContext(UserContext);
-  // console.log(user);
-  // const isLoggedIn = user.isLoggedIn;
-
-  useEffect(() => {
-    const ui = new firebaseui.auth.AuthUI(firebase.auth());
-
-    ui.start("#firebaseui-auth-container", {
-      signInOptions: [
-        {
-          provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-          signInMethod:
-            firebase.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD,
-          // Allow the user the ability to complete sign-in cross device,
-          // including the mobile apps specified in the ActionCodeSettings
-          // object below.
-          forceSameDevice: false,
-          // Used to define the optional firebase.auth.ActionCodeSettings if
-          // additional state needs to be passed along request and whether to open
-          // the link in a mobile app if it is installed.
-          emailLinkSignIn: function() {
-            return {
-              // Additional state showPromo=1234 can be retrieved from URL on
-              // sign-in completion in signInSuccess callback by checking
-              // window.location.href.
-              url: "https://www.example.com/completeSignIn?showPromo=1234",
-              // Custom FDL domain.
-              dynamicLinkDomain: "example.page.link",
-              // Always true for email link sign-in.
-              handleCodeInApp: true,
-              // Whether to handle link in iOS app if installed.
-              iOS: {
-                bundleId: "com.example.ios"
-              },
-              // Whether to handle link in Android app if opened in an Android
-              // device.
-              android: {
-                packageName: "com.example.android",
-                installApp: true,
-                minimumVersion: "12"
-              }
-            };
-          }
-        },
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID
-      ]
-    });
-  });
-
-  // Is there an email link sign-in?
-  if (ui.isPendingRedirect()) {
-    ui.start("#firebaseui-auth-container", uiConfig);
-  }
-
-  const uiConfig = {
-    callbacks: {
-      signInSuccessWithAuthResult: (authResult, redirectUrl) => {
-        // User successfully signed in.
-
-        console.log(authResult, redirectUrl);
-        // setUser({isLoggedIn: !this.state.isLoggedIn, user:authResult, x:0});
-        // setUser(user => (user: authResult));
-        this.props.history.push("/workspace");
-        // return true;
-      },
-      uiShown: function() {
-        // The widget is rendered.
-        // Hide the loader.
-        document.getElementById("loader").style.display = "none";
-      }
-    },
-    // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
-    signInFlow: "popup",
-    signInSuccessUrl: "/workspace",
-    signInOptions: [
-      // Leave the lines as is for the providers you want to offer your users.
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.EmailAuthProvider.PROVIDER_ID
-    ],
-    // Terms of service url.
-    tosUrl: "<your-tos-url>",
-    // Privacy policy url.
-    privacyPolicyUrl: "<your-privacy-policy-url>"
-  };
-
-  ui.start("#firebaseui-auth-container", uiConfig);
-
-  return (
-    <React.Fragment>
-      <Header />
-      <div className="login">
-        <img src={memberBackground} className="member-background" />
-        <div className="member-side-background">
-          <div className="firebase-container">
-            <div className="login-description">
-              Only one click away to start painting...
-            </div>
-            <div id="firebaseui-auth-container"></div>
-            <div id="loader">Loading...</div>
-          </div>
-        </div>
-      </div>
-      <Footer />
-    </React.Fragment>
-  );
-};

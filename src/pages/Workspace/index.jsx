@@ -3,7 +3,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
 import DemoPicture from "../../assets/index-picture-1.jpeg";
-import IconAdd from "../../assets/add-button.png";
+import IconAdd from "../../assets/icon-add-white.png";
 import IconDelete from "../../assets/icon-delete.png";
 import { Link } from "react-router-dom";
 // import { UserContext } from "../../contexts/AuthContext";
@@ -18,17 +18,19 @@ const Workspace = () => {
 
   useEffect(() => {
     projectContext.setProject(null);
-    db.collection("projects")
-      .get()
-      .then(querySnapshot => {
-        let data = [];
-        querySnapshot.forEach(doc => {
-          console.log(doc.data().name);
-          data.push({ id: doc.id, project: doc.data() });
-        });
-        console.log(data);
-        setProjects(data);
+    const projectsRef = db.collection("projects");
+
+    projectsRef.orderBy("createdTime")
+    .get()
+    .then(querySnapshot => {
+      let data = [];
+      querySnapshot.forEach(doc => {
+        console.log(doc.data().name);
+        data.push({ id: doc.id, project: doc.data() });
       });
+      console.log(data);
+      setProjects(data);
+    });
   }, [true]);
 
   const deleteProject = (id) => () => {
@@ -38,7 +40,10 @@ const Workspace = () => {
     }).catch(function(error){
       console.log(error);
     });
-    db.collection("projects")
+    projectContext.setProject(null);
+    const projectsRef = db.collection("projects");
+
+    projectsRef.orderBy("createdTime")
       .get()
       .then(querySnapshot => {
         let data = [];
@@ -76,8 +81,8 @@ const Workspace = () => {
       <div className="workspace">
         <div className="add-project-background">
         <Link to="/survey" className="add-project">
-          <div >Add New Project</div>
-          {/* <img src={IconAdd} className="add-project" /> */}
+        <img src={IconAdd} className="icon-add"/>
+          <div className="text-add">Add Project</div>
         </Link>
         </div>
         <div className="projects">
