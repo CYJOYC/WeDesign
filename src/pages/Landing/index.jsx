@@ -6,6 +6,7 @@ import Footer from "../../components/Footer";
 import canvas from "../../assets/canvas2.jpeg";
 import people from "../../assets/people-vector.jpg";
 import PaintingLine from "../../assets/painting-line.png";
+import IconScrollDown from "../../assets/icon-scroll-down.png";
 
 export default class Landing extends React.Component {
   render() {
@@ -20,6 +21,7 @@ export default class Landing extends React.Component {
           <div className="landing-main-story">
             <div className="landing-main-text">The story behind Canvas</div>
             <div className="landing-main-text-supplement">Scroll down to see</div>
+            <img src={IconScrollDown} className="landing-scroll-down"/>
             </div>
         </div>
         

@@ -3,8 +3,9 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
 import DemoPicture from "../../assets/index-picture-1.jpeg";
-import IconAdd from "../../assets/icon-add-white.png";
+import IconAdd from "../../assets/icon-add-white-bold.png";
 import IconDelete from "../../assets/icon-delete.png";
+
 import { Link } from "react-router-dom";
 // import { UserContext } from "../../contexts/AuthContext";
 import firebase from "firebase/app";
@@ -86,13 +87,13 @@ const Workspace = () => {
         </Link>
         </div>
         <div className="projects">
-          <div className="project-each">
+          {/* <div className="project-each">
             <img src={IconDelete} className="delete-project" />
             <div className="project-background">
               <img src={DemoPicture} className="project-picture" />
               <div className="project-name">Demo Project</div>
             </div>
-          </div>
+          </div> */}
           {projectsName}
         </div>
       </div>

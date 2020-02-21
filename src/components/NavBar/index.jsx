@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import firebase from "firebase/app";
 import { ProjectContext } from "../../contexts/ProjectID";
 
+
+
+
 const NavBar = () => {
   const context = useContext(ProjectContext);
 
