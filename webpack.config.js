@@ -13,8 +13,6 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
-  node: { fs: 'empty' },
-  
   module: {
     rules: [
       {

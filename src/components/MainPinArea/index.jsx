@@ -4,8 +4,9 @@ import "firebase/storage";
 import { VersionContext } from "../../contexts/Version";
 import { UserContext } from "../../contexts/AuthContext";
 import ProjectInfo from "../ProjectInfo";
+import PropTypes from 'prop-types';
 
-const MainPinArea = () => {
+const MainPinArea = ({ pins, setPins, showAllPins, setShowAllPins }) => {
   const db = firebase.firestore();
   const userContext = useContext(UserContext);
   const versionContext = useContext(VersionContext);
@@ -13,52 +14,23 @@ const MainPinArea = () => {
   let projectID;
   if (location.search.length == 21) {
     projectID = location.search.slice(1);
-  }
-
-  // show projectProfile
-  const [projectProfile, setProjectProfile] = useState({
-    isShow: false
-  });
-
-  const handleProjectShow = () => {
-    setProjectProfile({
-      isShow: !projectProfile.isShow
-    });
   };
 
-  // show and hide all pins
-
-  const [allPinsStatus, setAllPinsStatus] = useState({
-    pinsOn: true,
-    display: "block"
-  });
+ // show & hide pins
 
   const showPins = () => {
-    setAllPinsStatus({
-      pinsOn: true,
-      display: "block"
+    setShowAllPins({
+      isAllPinsShown:true,
     });
   };
 
   const hidePins = () => {
-    setAllPinsStatus({
-      pinsOn: false,
-      display: "none"
+    setShowAllPins({
+      isAllPinsShown:false,
     });
   };
 
-  // save pins data
 
-  const [pins, setPins] = useState([]);
-
-  useEffect(() => {
-    const projectsRef = db.collection("projectPins").doc(projectID);
-    projectsRef.get().then(doc => {
-      if (doc.data().pins != undefined) {
-        setPins(doc.data().pins);
-      }
-    });
-  }, [true]);
 
   // pin function
 
@@ -76,6 +48,7 @@ const MainPinArea = () => {
 
   const handlePinOnPicture = e => {
     if (isPinOn.pinStatus == true) {
+      
       const rect = e.currentTarget.getBoundingClientRect();
       const rectHeight = rect.bottom - rect.top;
       const rectWidth = rect.right - rect.left;
@@ -83,7 +56,13 @@ const MainPinArea = () => {
       const y = e.clientY - rect.top;
       const relativeX = (x / rectWidth) * 100;
       const relativeY = (y / rectHeight) * 100;
-      console.log(pins);
+      // console.log(pins);
+      // setNewPin({isNewPin:true,relativeY,createdTime:Date.now()});
+
+      // props.onClick();
+
+
+
       const dbLinkForPins = db.collection("projectPins").doc(projectID);
       dbLinkForPins
         .set(
@@ -123,6 +102,7 @@ const MainPinArea = () => {
 
   // process pins for rendering
 
+
   let allPinsPosition;
   if (versionContext) {
     const filteredPins = pins.filter(pin => {
@@ -159,11 +139,13 @@ const MainPinArea = () => {
           className="main-design-picture"
           style={{ cursor: isPinOn.cursorDisplay }}
           onClick={handlePinOnPicture}
+          
         />
         <div
-          className="main-design-cover"
+          className={`main-design-cover ${!showAllPins.isAllPinsShown && 'hide'}`}
           onClick={handlePinOnPicture}
-          style={{ display: allPinsStatus.display }}
+         
+          // style={{ display: allPinsStatus.display }}
         >
           {allPinsPosition}
         </div>
@@ -189,4 +171,16 @@ const MainPinArea = () => {
   );
 };
 
+
+
+// MainPinArea.prototype = {
+//   isPins:PropTypes.bool.isRequired,
+//   pins:PropTypes.array.isRequired,
+//   isNewPin: PropTypes.bool.isRequired,
+//   setNewPin: PropTypes.func,
+//   setPins: PropTypes.func.isRequired,
+//   onClick: PropTypes.func.isRequired,
+// }
+
 export default MainPinArea;
+
