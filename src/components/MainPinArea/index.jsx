@@ -5,6 +5,8 @@ import { VersionContext } from "../../contexts/Version";
 import { UserContext } from "../../contexts/AuthContext";
 import ProjectInfo from "../ProjectInfo";
 import PropTypes from 'prop-types';
+import Pin from "../../assets/icon-pin-noborder.png";
+import { callbackify } from "util";
 
 const MainPinArea = ({ pins, setPins, showAllPins, setShowAllPins }) => {
   const db = firebase.firestore();
@@ -70,6 +72,7 @@ const MainPinArea = ({ pins, setPins, showAllPins, setShowAllPins }) => {
             pins: [
               ...pins,
               {
+                checked: false,
                 version: versionContext.showVersion,
                 relativeX,
                 relativeY,
@@ -87,6 +90,7 @@ const MainPinArea = ({ pins, setPins, showAllPins, setShowAllPins }) => {
       setPins([
         ...pins,
         {
+          checked: false,
           version: versionContext.showVersion,
           relativeX,
           relativeY,
@@ -118,11 +122,15 @@ const MainPinArea = ({ pins, setPins, showAllPins, setShowAllPins }) => {
             position: "absolute",
             top: `${filteredPin.relativeY}%`,
             left: `${filteredPin.relativeX}%`,
-            width: "5px",
-            height: "5px",
-            backgroundColor: "#000"
+            // width: "10px",
+            // height: "10px",
+            // backgroundColor: "#000",
+            // backgroundImage:{Pin}
           }}
-        />
+        >
+          <img src={Pin} className="pin"/>
+          </div>
+         
       ));
       allPinsPosition = <>{eachPinPosition}</>;
     }
@@ -143,9 +151,8 @@ const MainPinArea = ({ pins, setPins, showAllPins, setShowAllPins }) => {
         />
         <div
           className={`main-design-cover ${!showAllPins.isAllPinsShown && 'hide'}`}
+          style={{ cursor: isPinOn.cursorDisplay }}
           onClick={handlePinOnPicture}
-         
-          // style={{ display: allPinsStatus.display }}
         >
           {allPinsPosition}
         </div>
