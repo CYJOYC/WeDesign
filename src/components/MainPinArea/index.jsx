@@ -4,11 +4,20 @@ import "firebase/storage";
 import { VersionContext } from "../../contexts/Version";
 import { UserContext } from "../../contexts/AuthContext";
 import ProjectInfo from "../ProjectInfo";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import Pin from "../../assets/icon-pin-noborder.png";
+import SelectedPin from "../../assets/icon-pin-highlight.png";
 import { callbackify } from "util";
+import clsx from "clsx";
 
-const MainPinArea = ({ pins, setPins, showAllPins, setShowAllPins }) => {
+const MainPinArea = ({
+  pins,
+  setPins,
+  showAllPins,
+  setShowAllPins,
+  setSelectedPin,
+  selectedPin
+}) => {
   const db = firebase.firestore();
   const userContext = useContext(UserContext);
   const versionContext = useContext(VersionContext);
@@ -16,23 +25,15 @@ const MainPinArea = ({ pins, setPins, showAllPins, setShowAllPins }) => {
   let projectID;
   if (location.search.length == 21) {
     projectID = location.search.slice(1);
-  };
+  }
 
- // show & hide pins
+  // show & hide pins
 
-  const showPins = () => {
+  const changePinsDisplay = () => {
     setShowAllPins({
-      isAllPinsShown:true,
+      isAllPinsShown: !showAllPins.isAllPinsShown
     });
   };
-
-  const hidePins = () => {
-    setShowAllPins({
-      isAllPinsShown:false,
-    });
-  };
-
-
 
   // pin function
 
@@ -48,9 +49,12 @@ const MainPinArea = ({ pins, setPins, showAllPins, setShowAllPins }) => {
     });
   };
 
+  const handlePinClick = pinId => () => {
+    setSelectedPin(pinId);
+  };
+
   const handlePinOnPicture = e => {
     if (isPinOn.pinStatus == true) {
-      
       const rect = e.currentTarget.getBoundingClientRect();
       const rectHeight = rect.bottom - rect.top;
       const rectWidth = rect.right - rect.left;
@@ -62,8 +66,6 @@ const MainPinArea = ({ pins, setPins, showAllPins, setShowAllPins }) => {
       // setNewPin({isNewPin:true,relativeY,createdTime:Date.now()});
 
       // props.onClick();
-
-
 
       const dbLinkForPins = db.collection("projectPins").doc(projectID);
       dbLinkForPins
@@ -106,7 +108,6 @@ const MainPinArea = ({ pins, setPins, showAllPins, setShowAllPins }) => {
 
   // process pins for rendering
 
-
   let allPinsPosition;
   if (versionContext) {
     const filteredPins = pins.filter(pin => {
@@ -114,23 +115,27 @@ const MainPinArea = ({ pins, setPins, showAllPins, setShowAllPins }) => {
     });
     console.log(`this is filtered ${filteredPins}`);
     if (filteredPins.length != 0) {
+      console.log(selectedPin);
       const eachPinPosition = filteredPins.map(filteredPin => (
         <div
-          className="each-pin"
+          // className="each-pin"
+          className={clsx("each-pin", {
+            selected: selectedPin === filteredPin.createdTime
+          })}
           key={filteredPin.createdTime}
           style={{
             position: "absolute",
             top: `${filteredPin.relativeY}%`,
-            left: `${filteredPin.relativeX}%`,
+            left: `${filteredPin.relativeX}%`
             // width: "10px",
             // height: "10px",
             // backgroundColor: "#000",
             // backgroundImage:{Pin}
           }}
+          onClick={handlePinClick(filteredPin.createdTime)}
         >
-          <img src={Pin} className="pin"/>
-          </div>
-         
+          <img src={Pin} className="pin" />
+        </div>
       ));
       allPinsPosition = <>{eachPinPosition}</>;
     }
@@ -147,10 +152,10 @@ const MainPinArea = ({ pins, setPins, showAllPins, setShowAllPins }) => {
           className="main-design-picture"
           style={{ cursor: isPinOn.cursorDisplay }}
           onClick={handlePinOnPicture}
-          
         />
         <div
-          className={`main-design-cover ${!showAllPins.isAllPinsShown && 'hide'}`}
+          className={`main-design-cover ${!showAllPins.isAllPinsShown &&
+            "hide"}`}
           style={{ cursor: isPinOn.cursorDisplay }}
           onClick={handlePinOnPicture}
         >
@@ -163,22 +168,48 @@ const MainPinArea = ({ pins, setPins, showAllPins, setShowAllPins }) => {
   return (
     <div className="main-design-center">
 
+      {versionContext.showVersion != 0 ? 
+
+
+
       <div className="pin-function">
-        {/* <div onClick={handleProjectShow}>Project Profile</div>
-        <div>Team Member</div> */}
-        <div className="pin-button-each" onClick={handlePin}>Pin</div>
-        <div className="pin-button-each" onClick={showPins}>Show All Pins</div>
-        <div className="pin-button-each" onClick={hidePins}>Hide All Pins</div>
+        <div
+          className={`pin-button ${isPinOn.pinStatus && "active"}`}
+          onClick={handlePin}
+        >
+          <img src={Pin} className="pin-button-img" />
+          <div
+            className="pin-button-text"
+            style={{ color: isPinOn.pinStatus ? "#D63864" : "black" }}
+          >
+            Pin
+          </div>
+        </div>
+        <div className="pin-toggle-container">
+          <input
+            type="checkbox"
+            className="toggle-slider"
+            id="displayPins"
+            name="displayPins"
+            checked={showAllPins.isAllPinsShown}
+            onChange={changePinsDisplay}
+          />
+          <label
+            className="checkbox-displaypins"
+            htmlFor="displayPins"
+            style={{ color: showAllPins.isAllPinsShown ? "#D63864" : "black" }}
+          >
+            Display All Pins
+          </label>
+        </div>
       </div>
-      {/* <div className={`project-information ${!projectProfile.isShow && 'hide'}`}>
-        <ProjectInfo />
-      </div> */}
+
+      : <div className="select-design-text">Please select a design or upload one from the left side panel</div>}
+
       <div className="main-design-background">{designPicture}</div>
     </div>
   );
 };
-
-
 
 // MainPinArea.prototype = {
 //   isPins:PropTypes.bool.isRequired,
@@ -190,4 +221,3 @@ const MainPinArea = ({ pins, setPins, showAllPins, setShowAllPins }) => {
 // }
 
 export default MainPinArea;
-

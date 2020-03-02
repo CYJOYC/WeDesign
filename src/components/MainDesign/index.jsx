@@ -24,6 +24,12 @@ const MainDesign = () => {
 
     const [pins, setPins] = useState([]);
 
+    const [showAllPins, setShowAllPins] = useState({
+        isAllPinsShown:true,
+    })
+
+    const [selectedPin, setSelectedPin] = useState('')
+
     useEffect(() => {
       const projectsRef = db.collection("projectPins").doc(projectID);
       projectsRef.get().then(doc => {
@@ -33,24 +39,22 @@ const MainDesign = () => {
       });
     }, [true]);
 
-    const [showAllPins, setShowAllPins] = useState({
-        isAllPinsShown:true,
-    })
-
-
-
-
+    
     return(
         <div className="main-design-area">
             <VersionList/>
             <MainPinArea
                 pins={pins}
+                setSelectedPin={setSelectedPin}
+                selectedPin={selectedPin}
                 setPins={setPins}
                 showAllPins={showAllPins}
                 setShowAllPins={setShowAllPins}
             />
             <NoteArea
                 pins={pins}
+                setSelectedPin={setSelectedPin}
+                selectedPin={selectedPin}
                 setPins={setPins}
                 showAllPins={showAllPins}
                 setShowAllPins={setShowAllPins}

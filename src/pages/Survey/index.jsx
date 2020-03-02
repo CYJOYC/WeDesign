@@ -15,83 +15,117 @@ const Survey = () => {
   const db = firebase.firestore();
   const fileInputEl = useRef(null);
   const context = useContext(UserContext);
+  const userUid = context.uid;
   let warning;
-  
+
   const handleSubmit = e => {
-      e.preventDefault();
-      
-      const format = Array.from(e.currentTarget.type)
+    e.preventDefault();
+
+    const format = Array.from(e.currentTarget.type)
       .filter(type => type.checked)
       .map(type => type.value);
-      
-      const referenceImages = imageURLs.map(imageURL => ({
-        downloadURL:imageURL.downloadURL, 
-        fileName:imageURL.fileName, 
-        note: e.currentTarget[`note-${imageURL.fileName}`].value
-      })
-      )
-      
+
+    const referenceImages = imageURLs.map(imageURL => ({
+      downloadURL: imageURL.downloadURL,
+      fileName: imageURL.fileName,
+      note: e.currentTarget[`note-${imageURL.fileName}`].value
+    }));
+
     const creator = context.userInfo.uid;
-    console.log(e.currentTarget.name.value, e.currentTarget.name.value.length)
+    console.log(e.currentTarget.name.value, e.currentTarget.name.value.length);
 
+    if (
+      e.currentTarget.name.value.length != 0 &&
+      e.currentTarget.name.value.length <= 20
+    ) {
+      db.collection("projects")
+        .add({
+          creator,
+          createdTime: Date.now(),
+          name: e.currentTarget.name.value,
+          purpose: e.currentTarget.purpose.value,
+          format,
+          referenceImages
+        })
+        .then(ref => {
+          const userRef = db.collection("users").doc(creator);
 
-    if ( e.currentTarget.name.value.length != 0 && e.currentTarget.name.value.length <= 20) {
-      db.collection("projects").add({
-        creator,
-        createdTime: Date.now(),
-        name: e.currentTarget.name.value,
-        purpose: e.currentTarget.purpose.value,
-        format,
-        referenceImages
-      })
-      .then(ref => {
-        window.location.href = "/canvas?" + ref.id;
-      });
-    } if (e.currentTarget.name.value.length == 0) {
+          userRef
+            .get()
+            .then(function(doc) {
+              if (doc.exists) {
+                console.log(doc.data().projects);
+                userRef.set(
+                  { projects: [...doc.data().projects, ref.id] },
+                  { merge: true }
+                ).then(() => {
+                  window.location.href = "/canvas?" + ref.id;
+                });
+                // if (doc.data().projects == null) {
+                //   userRef.set({ projects: [ref.id] }, { merge: true });
+                // } else {
+                //   const projectsArray = Array.from(doc.data().projects);
+                //   projectsArray.push(ref.id);
+                //   userRef.set({ projects: projectsArray }, { merge: true });
+                // }
+              } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+              }
+            })
+            .catch(function(error) {
+              console.log("Error getting document:", error);
+            })
+        });
+    }
+    if (e.currentTarget.name.value.length == 0) {
       alert("Please provide the file name");
-    } if (e.currentTarget.name.value.length > 20) {
-        alert("Please limit the project name whithin 20 characters")
+    }
+    if (e.currentTarget.name.value.length > 20) {
+      alert("Please limit the project name whithin 20 characters");
     }
   };
 
-
   const handleSaveLeave = e => {
     e.preventDefault();
-      
+
     const format = Array.from(e.currentTarget.type)
-    .filter(type => type.checked)
-    .map(type => type.value);
-    
+      .filter(type => type.checked)
+      .map(type => type.value);
+
     const referenceImages = imageURLs.map(imageURL => ({
-      downloadURL:imageURL.downloadURL, 
-      fileName:imageURL.fileName, 
+      downloadURL: imageURL.downloadURL,
+      fileName: imageURL.fileName,
       note: e.currentTarget[`note-${imageURL.fileName}`].value
-    })
-    )
-    
-  const creator = context.userInfo.uid;
-  console.log(e.currentTarget.name.value, e.currentTarget.name.value.length)
+    }));
 
+    const creator = context.userInfo.uid;
+    console.log(e.currentTarget.name.value, e.currentTarget.name.value.length);
 
-  if ( e.currentTarget.name.value.length != 0 && e.currentTarget.name.value.length <= 20) {
-    db.collection("projects").add({
-      creator,
-      createdTime: Date.now(),
-      name: e.currentTarget.name.value,
-      purpose: e.currentTarget.purpose.value,
-      format,
-      referenceImages
-    })
-    .then(ref => {
-      window.location.href = "/workspace";
-    });
-  } if (e.currentTarget.name.value.length == 0) {
-    alert("Project name is required to create a project");
-  } if (e.currentTarget.name.value.length > 20) {
-      alert("Please limit the project name whithin 20 characters")
-  }
-
-  }
+    if (
+      e.currentTarget.name.value.length != 0 &&
+      e.currentTarget.name.value.length <= 20
+    ) {
+      db.collection("projects")
+        .add({
+          creator,
+          createdTime: Date.now(),
+          name: e.currentTarget.name.value,
+          purpose: e.currentTarget.purpose.value,
+          format,
+          referenceImages
+        })
+        .then(ref => {
+          window.location.href = "/workspace";
+        });
+    }
+    if (e.currentTarget.name.value.length == 0) {
+      alert("Project name is required to create a project");
+    }
+    if (e.currentTarget.name.value.length > 20) {
+      alert("Please limit the project name whithin 20 characters");
+    }
+  };
 
   const [imageURLs, setImageURLs] = useState([]);
 
@@ -142,15 +176,13 @@ const Survey = () => {
         uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
           console.log("File available at", downloadURL);
           setImageURLs([...imageURLs, { downloadURL, fileName: file.name }]);
-          fileInputEl.current.value = null
+          fileInputEl.current.value = null;
         });
       }
     );
   };
 
-  const deleteReference = (imageKey) => () => {
-
-  }
+  const deleteReference = imageKey => () => {};
 
   let uploadImages;
   if (imageURLs.length !== 0) {
@@ -161,7 +193,12 @@ const Survey = () => {
             {imageURL.fileName}
           </div>
           <div className="delete-upload-container">
-            <img className="delete-upload-picture" src={IconDelete} onClick={deleteReference(imageURL.fileName)} ref={deleteReference}/>
+            <img
+              className="delete-upload-picture"
+              src={IconDelete}
+              onClick={deleteReference(imageURL.fileName)}
+              ref={deleteReference}
+            />
           </div>
         </div>
         <div className="each-upload-details">
@@ -184,9 +221,7 @@ const Survey = () => {
       </div>
     ));
 
-    uploadImages = (
-      <>{uploadImage}</>
-    );
+    uploadImages = <>{uploadImage}</>;
   }
 
   const [unsplashPopup, setUnsplashPopup] = useState({
@@ -395,7 +430,10 @@ const Survey = () => {
                 value="Reset"
                 className="survey-button survey-button-reset"
               />
-              <button className="survey-button survey-button-save" onClick={handleSaveLeave}>
+              <button
+                className="survey-button survey-button-save"
+                onClick={handleSaveLeave}
+              >
                 Save and leave
               </button>
               <input

@@ -13,6 +13,7 @@
     ]
   },
   "dependencies": {
+    "clsx": "^1.1.0",
     "event-stream": "^4.0.1",
     "firebase": "^7.8.0",
     "firebaseui": "^4.4.0",

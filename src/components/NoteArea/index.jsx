@@ -1,15 +1,23 @@
 import React, { useState, useContext, useEffect } from "react";
+import clsx from "clsx";
 import firebase from "firebase/app";
 import "firebase/storage";
 import { VersionContext } from "../../contexts/Version";
 import { UserContext } from "../../contexts/AuthContext";
 import ProjectInfo from "../ProjectInfo";
 import PropTypes from "prop-types";
-import Unchecked from "../../assets/icon-unchecked.png";
-import Checked from "../../assets/icon-checked.png";
+import Unchecked from "../../assets/icon-uncheck-pink.png";
+import Checked from "../../assets/icon-check-pink.png";
 import Delete from "../../assets/icon-delete.png";
 
-const NoteArea = ({ pins, setPins, showAllPins, setShowAllPins }) => {
+const NoteArea = ({
+  pins,
+  setPins,
+  showAllPins,
+  setShowAllPins,
+  selectedPin,
+  setSelectedPin
+}) => {
   const versionContext = useContext(VersionContext);
   const db = firebase.firestore();
   let projectID;
@@ -45,7 +53,14 @@ const NoteArea = ({ pins, setPins, showAllPins, setShowAllPins }) => {
     if (pins[pinIndex].notes == undefined) {
       const newPin = {
         ...pins[pinIndex],
-        notes: [{ creator, creatorPicture, note: e.currentTarget.opinion.value, writtenTime: Date.now() }]
+        notes: [
+          {
+            creator,
+            creatorPicture,
+            note: e.currentTarget.opinion.value,
+            writtenTime: Date.now()
+          }
+        ]
       };
       console.log(newPin);
       const newPins = Array.from(pins);
@@ -101,7 +116,6 @@ const NoteArea = ({ pins, setPins, showAllPins, setShowAllPins }) => {
     saveToDB(newPins);
   };
 
-
   const deleteNote = checkValue => {
     let pinIndex;
     for (let i = 0; i < pins.length; i++) {
@@ -112,18 +126,22 @@ const NoteArea = ({ pins, setPins, showAllPins, setShowAllPins }) => {
     console.log(pinIndex);
 
     const saveToDB = newPins => {
-        const dbLinkForPins = db.collection("projectPins").doc(projectID);
-        dbLinkForPins
-          .set({ pins: newPins }, { merge: true })
-          .catch(function(error) {
-            console.error("Error writing document: ", error);
-          });
-      };
-  
-      const newPins = Array.from(pins);
-      newPins.splice(pinIndex, 1);
-      setPins(newPins);
-      saveToDB(newPins);
+      const dbLinkForPins = db.collection("projectPins").doc(projectID);
+      dbLinkForPins
+        .set({ pins: newPins }, { merge: true })
+        .catch(function(error) {
+          console.error("Error writing document: ", error);
+        });
+    };
+
+    const newPins = Array.from(pins);
+    newPins.splice(pinIndex, 1);
+    setPins(newPins);
+    saveToDB(newPins);
+  };
+
+  const handlePinClick = (pinId) => () => {
+    setSelectedPin(pinId);
   }
 
   let allNotes;
@@ -134,23 +152,38 @@ const NoteArea = ({ pins, setPins, showAllPins, setShowAllPins }) => {
     //   console.log(`this is filtered ${filteredPins}`);
     if (filteredPins.length != 0) {
       const eachInput = filteredPins.map(filteredPin => (
-        <div className="each-note" key={filteredPin.createdTime}>
-          <div className="note-instruction">
+        <div
+          className={clsx("each-note", {
+            selected: selectedPin === filteredPin.createdTime
+          })}
+          key={filteredPin.createdTime}
+          onClick={handlePinClick(filteredPin.createdTime)}
+        >
+          <div className="note-instruction" >
             {filteredPin.checked ? (
-                
-              <img
-                className="note-check"
-                src={Checked}
-                onClick={handleCheck.bind(handleCheck, filteredPin.createdTime)}
-              />
-              
+              <div className="note-check-status">
+                <img
+                  className="note-check"
+                  src={Checked}
+                  onClick={handleCheck.bind(
+                    handleCheck,
+                    filteredPin.createdTime
+                  )}
+                />
+                <div className="note-check-text">Solved</div>
+              </div>
             ) : (
-             
-              <img
-                className="note-uncheck"
-                src={Unchecked}
-                onClick={handleCheck.bind(handleCheck, filteredPin.createdTime)}
-              />
+              <div className="note-check-status">
+                <img
+                  className="note-uncheck"
+                  src={Unchecked}
+                  onClick={handleCheck.bind(
+                    handleCheck,
+                    filteredPin.createdTime
+                  )}
+                />
+                <div className="note-uncheck-text">Unsolved</div>
+              </div>
             )}
 
             {/* <label className="note-instruction-text">Note for the pin</label> */}
@@ -164,21 +197,30 @@ const NoteArea = ({ pins, setPins, showAllPins, setShowAllPins }) => {
             {filteredPin.notes
               ? filteredPin.notes.map(note => (
                   <div className="each-context" key={note.writtenTime}>
-                      <div className="note-writer">
-                      <img src={creatorPicture} className="note-writer-picture"/>
-                    <div className="note-writer-name">{note.creator}</div>
-
-                      </div>
+                    <div className="note-writer">
+                      <img
+                        src={creatorPicture}
+                        className="note-writer-picture"
+                      />
+                      <div className="note-writer-name">{note.creator}</div>
+                    </div>
                     <div className="note-context">{note.note}</div>
                   </div>
                 ))
               : null}
           </div>
 
-          <form onSubmit={handleNote}>
+          <form onSubmit={handleNote} className="note-form">
             <input type="hidden" name="key" value={filteredPin.createdTime} />
-            <textarea type="text" name="opinion" className="note-input" />
-            <button type="submit" className="note-submit">Comment</button>
+            <textarea
+              type="text"
+              name="opinion"
+              className="note-input"
+              placeholder="Leave your message here..."
+            />
+            <button type="submit" className="note-submit">
+              Comment
+            </button>
           </form>
         </div>
       ));

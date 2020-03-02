@@ -1,6 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import ProjectInfo from "../../components/ProjectInfo";
 import ProjectMember from "../../components/TeamMember";
+import IconOpen from "../../assets/icon-open.png";
+
 
 const ProjectNavBar = () => {
 
@@ -12,7 +14,10 @@ const ProjectNavBar = () => {
 
   const handleProjectShow = () => {
     setProjectProfile({
-      isShow: !projectProfile.isShow
+      isShow: true
+    });
+    setProjectMember({
+      isShow: false
     });
   };
 
@@ -24,15 +29,38 @@ const ProjectNavBar = () => {
 
   const handleProjectMember = () => {
     setProjectMember({
-      isShow: !projectMember.isShow
+      isShow: true
+    });
+    setProjectProfile({
+      isShow: false
     });
   };
+
+
+const handleCloseAll = () => {
+  setProjectMember({
+    isShow: false
+  });
+  setProjectProfile({
+    isShow: false
+  });
+}
+
+
 
   return (
     <>
       <div className="function-button">
-        <div onClick={handleProjectShow}>Project Profile</div>
-        <div onClick={handleProjectMember}>Team Member</div>
+        <div onClick={handleProjectShow} className="button-project" style={{color:projectProfile.isShow?"#D63684":"#fff", fontWeight: projectProfile.isShow?"bold":"normal"}}>Project Profile</div>
+        <div onClick={handleProjectMember} className="button-member" style={{color:projectMember.isShow?"#D63684":"#fff", fontWeight: projectMember.isShow?"bold":"normal"}}>Team Member</div>
+        <div className="button-fold">
+          {projectProfile.isShow || projectMember.isShow ?
+          
+          <img className="icon-fold" src={IconOpen} style={{ transform: "rotate(180deg)"}} onClick={handleCloseAll} />
+          :
+          <img className="icon-fold" src={IconOpen} style={{ transform:"rotate(0deg)"}} onClick={handleProjectShow}/>
+}
+          </div>
       </div>
       <div className={`project-information ${!projectProfile.isShow && 'hide'}`}>
         <ProjectInfo />

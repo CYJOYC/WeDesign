@@ -33,7 +33,7 @@ const ProjectInfo = () => {
     ));
     const referencesAll = <>{referenceEach}</>;
 
-    const URL = context.project.data.referenceImages[0].downloadURL;
+    // const URL = context.project.data.referenceImages[0].downloadURL;
     projectProfile = (
       <>
         <div className="project-info-part1">
