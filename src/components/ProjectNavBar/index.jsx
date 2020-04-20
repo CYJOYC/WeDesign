@@ -14,7 +14,7 @@ const ProjectNavBar = () => {
 
   const handleProjectShow = () => {
     setProjectProfile({
-      isShow: true
+      isShow: !projectProfile.isShow
     });
     setProjectMember({
       isShow: false
@@ -29,7 +29,7 @@ const ProjectNavBar = () => {
 
   const handleProjectMember = () => {
     setProjectMember({
-      isShow: true
+      isShow: !projectMember.isShow
     });
     setProjectProfile({
       isShow: false

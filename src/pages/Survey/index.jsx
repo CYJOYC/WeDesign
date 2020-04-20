@@ -41,6 +41,7 @@ const Survey = () => {
       db.collection("projects")
         .add({
           creator,
+          members:[],
           createdTime: Date.now(),
           name: e.currentTarget.name.value,
           purpose: e.currentTarget.purpose.value,
@@ -109,6 +110,7 @@ const Survey = () => {
       db.collection("projects")
         .add({
           creator,
+          members:[],
           createdTime: Date.now(),
           name: e.currentTarget.name.value,
           purpose: e.currentTarget.purpose.value,
