@@ -25,7 +25,7 @@ const MainDesign = () => {
     const [pins, setPins] = useState([]);
 
     const [showAllPins, setShowAllPins] = useState({
-        isAllPinsShown:true,
+        isAllPinsShown:false,
     })
 
     const [selectedPin, setSelectedPin] = useState('')

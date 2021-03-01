@@ -1,0 +1,119 @@
+/* note area */
+
+.note-for-pin{
+    width:20%;
+    margin-top:5%;
+    margin-right:1%;
+}
+
+.each-note{
+    display:flex;
+    flex-direction: column;
+    background: rgba(214, 56, 100, 0.2); 
+    border-radius: 5px;
+    margin:5px 5px 5px 0;
+    max-height:300px;
+    overflow-y: auto;
+
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+}
+::-webkit-scrollbar-thumb {
+  background: pink; 
+  border-radius: 10px;
+}
+
+.note-content,
+.note-form{
+    display:none;
+}
+
+.note-instruction{
+    display:flex;
+    justify-content: space-between;
+    padding:5%;
+}
+
+.note-check-status,
+.note-uncheck-text{
+    display:flex;
+    align-items: center;
+}
+.note-uncheck-text,
+.note-check-text{
+    color:#D63864;
+    font-size:12px;
+    line-height:18px;
+    margin-left:5px;
+}
+
+.note-check,
+.note-uncheck,
+.note-delete{
+    width:20px;
+    cursor: pointer;
+}
+.each-note.selected .note-instruction{
+    border-bottom:1px solid #D63864;
+}
+
+.each-note.selected .note-content{
+    display:block;
+
+}
+.each-note.selected .each-context{
+    padding:5% 5% 0 5%
+
+}
+.each-note.selected .each-context:last-child{
+    padding-bottom: 5%;
+}
+
+.each-note.selected .note-writer{
+    display:flex;
+    align-items: center;
+}
+
+.each-note.selected .note-writer-name{
+    font-size:12px;
+    margin-left:5px;
+}
+
+.each-note.selected .note-writer-picture{
+    width:30px;
+    height:30px;
+    border-radius: 50%;
+}
+.each-note.selected .note-context{
+    padding-left:35px;
+  
+}
+
+.each-note.selected .note-form{
+    border-top:1px solid #D63864;
+    display:block;
+}
+.each-note.selected .note-input{
+    border: 0 none;
+    resize:none;
+    background: rgba(214, 56, 100, 0); 
+    padding:5%;
+    height:auto;
+    width:90%;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+}
+.each-note.selected .note-submit{
+    float:right;
+    margin:5px;
+    outline:none;
+    text-align:center;
+    background:#D63864;
+    cursor: pointer;
+    border:none;
+    border-radius: 5px;
+    color:#fff;
+}
+

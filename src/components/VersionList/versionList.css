@@ -1,0 +1,59 @@
+/* version control bar */
+
+.version-control-container{
+    display:flex;
+    overflow:auto;
+    width:20%;
+    /* height:100vh; */
+    min-height:100vh;
+    background-color: #fdf5e6;
+}
+.version-control-button{
+    width:10px;
+    background-color: #D63864;
+    height:100%;
+}
+.version-upload-button{
+    width:80%;
+}
+
+.version-control-background{
+   display:flex;
+   flex-direction: column;
+   align-items: center;
+    /* min-height: 100vh; */
+    /* width:98%; */
+    flex:1;
+    
+    
+
+}
+
+.upload-btn-wrapper {
+    position: relative;
+    /* overflow: hidden; */
+    display: inline-block;
+  }
+  
+.btn {
+  border-radius: 5px;
+  margin: 10px 0 ;
+  background-color: #D63864;
+  color: #fff;
+  border: 0px;
+  box-shadow: 1px 1px 2px #666;
+  padding: 8px 20px;
+  font-size: 16px;
+}
+
+.upload-btn-wrapper:hover {
+    cursor: pointer;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}

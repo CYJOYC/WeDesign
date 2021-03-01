@@ -50,10 +50,6 @@ const ProjectInfo = () => {
           <div className="project-info-images">
             <b>Project Reference Picture:</b>
           </div>
-          
-     
-       
-          
           <div className="profile-reference-images">
             {referencesAll}
             {/* <img className="project-info-image" src={URL} /> */}

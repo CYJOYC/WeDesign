@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import "./versionItem.css";
 
 const VersionItem = ({fileName, imageURL, onClick}) => {
   return (

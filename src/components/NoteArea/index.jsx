@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
 import Unchecked from "../../assets/icon-uncheck-pink.png";
 import Checked from "../../assets/icon-check-pink.png";
 import Delete from "../../assets/icon-delete.png";
+import "./noteArea.css";
 
 const NoteArea = ({
   pins,

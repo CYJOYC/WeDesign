@@ -9,6 +9,7 @@ import Pin from "../../assets/icon-pin-noborder.png";
 import SelectedPin from "../../assets/icon-pin-highlight.png";
 import { callbackify } from "util";
 import clsx from "clsx";
+import "./mainPinArea.css";
 
 const MainPinArea = ({
   pins,
@@ -134,7 +135,8 @@ const MainPinArea = ({
           }}
           onClick={handlePinClick(filteredPin.createdTime)}
         >
-          <img src={Pin} className="pin" />
+          <div className="pin"/>
+          {/* <img src={Pin} className="pin" /> */}
         </div>
       ));
       allPinsPosition = <>{eachPinPosition}</>;
@@ -169,20 +171,15 @@ const MainPinArea = ({
     <div className="main-design-center">
 
       {versionContext.showVersion != 0 ? 
-
-
-
       <div className="pin-function">
         <div
           className={`pin-button ${isPinOn.pinStatus && "active"}`}
           onClick={handlePin}
         >
-          <img src={Pin} className="pin-button-img" />
           <div
             className="pin-button-text"
-            style={{ color: isPinOn.pinStatus ? "#D63864" : "black" }}
           >
-            Pin
+            Pin a Comment
           </div>
         </div>
         <div className="pin-toggle-container">

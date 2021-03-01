@@ -1,0 +1,196 @@
+/* main design area */
+.main-design-area{
+    display:flex;
+
+}
+
+.main-design-center{
+    flex:1;
+
+}
+
+
+
+/* main design center with pin */
+
+
+.select-design-text{
+    margin:2%;
+    color:lightgrey;
+}
+
+.pin-function{
+    display:flex;
+    width:50%;
+    margin:10px 20px 10px 10px;
+    align-items: center;
+    margin: 0 20px;
+   
+    /* box-shadow: 1px 1px 2px #666;
+    border-radius: 80px; */
+}
+
+.pin-button{
+    /* display:flex;
+    flex:1.5;
+    justify-content: space-evenly;
+    align-items: center; */
+    
+    /* height:30px;
+    margin: 2% 2%;
+    border: 1px solid lightgrey;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    
+    text-align:center;
+    line-height: 30px;
+    font-size:15px;
+   
+    cursor: pointer;
+    outline: none;
+    border-radius: 20px; */
+    
+    border-radius: 5px;
+    margin: 10px;
+
+    
+    
+    box-shadow: 1px 1px 2px #666;
+    padding: 8px 20px;
+    font-size: 16px;
+
+    background-color: #fff ;
+    color: #000000;
+    box-shadow: inset 2px 2px 3px rgba(0, 0, 0, 0.2),
+                        2px 2px 4px -2px rgba(0, 0, 0, 0.5);
+}
+
+
+.pin-button-img{
+    width:15px;
+    height:15px;
+}
+.pin-button.active{
+    background-color: #D63864;
+    color: #fff;
+
+
+    /* border-bottom:5px solid #990033; */
+    /* background-color: #fff ;
+    color: #D63864;
+    box-shadow: inset 2px 2px 3px rgba(0, 0, 0, 0.2),
+                        2px 2px 4px -2px rgba(0, 0, 0, 0.5); */
+
+}
+.pin-toggle-container{
+    /* display:flex;
+    align-items: center;
+    flex:3;
+    justify-content: space-evenly; */
+}
+.toggle-slider{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+}
+    .toggle-slider:focus {
+      outline: 0;
+    }
+    
+    .toggle-slider:not(:disabled) {
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    
+    .toggle-slider::before,
+    .toggle-slider::after {
+      content: "";
+      display: inline-block;
+      border-radius: 14px;
+    }
+    
+    .toggle-slider::before {
+      background-color: white;
+      height: 14px;
+      width: 24px;
+      box-shadow: inset 2px 2px 3px rgba(0, 0, 0, 0.2),
+                        2px 2px 4px -2px rgba(0, 0, 0, 0.5);
+    }
+    
+    .toggle-slider::after {
+      content: attr(data-text-off);
+      height: 12px;
+      line-height: 12px;
+      width: 12px;
+      top: 2px;
+      left: 1px;
+      position: absolute;
+      transition: left 0.1s ease-out;
+      background-color: grey; 
+      text-align: center;
+      color: white;
+    }
+    
+    .toggle-slider:checked::after {
+      content: attr(data-text-on);
+      left: 12px;
+      background-color: #D63864;
+    }
+    
+    .toggle-slider:disabled::after{
+       
+        background-color: grey;
+      
+    }
+    .toggle-slider:disabled:checked::after {
+        background-color: #D63864;
+      }
+
+    
+
+
+
+
+.main-design-background{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+  
+
+}
+.main-design-container{
+    margin:10% 0;
+    position:relative;
+    max-width:80%;
+    max-height:80%;
+    
+}
+.main-design-picture{
+    width:auto;
+    height:auto;
+    max-width: 100%;
+    max-height:100%;
+}
+.main-design-cover{
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:80;
+    /* background-color:lightgreen;
+    opacity: 50%; */
+}
+
+.each-pin{
+   width:15px;
+   height:15px;
+   border-radius:50%;
+   background-color: #D63864;
+   position:absolute;
+   top:-15px;
+   cursor: pointer;
+}
+.each-pin.selected{
+    border: 2px solid #fff;
+    z-index:100;
+}

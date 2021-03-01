@@ -4,6 +4,7 @@ import "firebase/storage";
 import { VersionContext } from "../../contexts/Version";
 import { ProjectContext } from "../../contexts/ProjectID";
 import { UserContext } from "../../contexts/AuthContext";
+import "./versionList.css";
 
 import VersionItem from "./VersionItem";
 
@@ -138,12 +139,16 @@ const VersionList = () => {
           className="version-control-background"
           style={{ display: versionShow.display }}
         >
-          <input
+          <div className="upload-btn-wrapper">
+            <button className="btn">Upload a file</button>
+            <input
             type="file"
             className="version-upload-button"
             accept=".jpg,.jpeg,.png"
             onChange={uploadFile}
           />
+          </div>
+          
           {versionImages.map(versionImage => (
             <VersionItem
               key={versionImage.imageURL}
@@ -152,8 +157,9 @@ const VersionList = () => {
             />
           ))}
         </div>
-        <div className="version-control-button" onClick={handleVersionShow} />
+        
       </div>
+      {/* <div className="version-control-button" onClick={handleVersionShow} /> */}
     </React.Fragment>
   );
 };

@@ -15,7 +15,7 @@
 }
 .profile-reference-each-image-container{
     flex:1;
-    height:250px;
+    height:300px;
     display:flex;
     justify-content: center;
     align-items: center;
@@ -24,8 +24,8 @@
 .profile-reference-each-image{
     width:auto;
     height:auto;
-    max-height:240px;
-    max-width:240px;
+    max-height:280px;
+    max-width:280px;
 }
 .profile-reference-each-description{
     flex:1;
