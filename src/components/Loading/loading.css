@@ -1,0 +1,13 @@
+.loading-container {
+    margin-top: 10%;
+}
+
+.loading-logo {
+    max-width: 200px;
+}
+
+.loading-text {
+    font-size: 20px;
+    text-align: center;
+    margin-top: 10px;
+}

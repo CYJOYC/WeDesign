@@ -1,0 +1,43 @@
+.project-information-details{
+    display:flex;
+    flex-direction: column;
+    width:100%;
+    justify-content: center;
+    margin: 20px 20px;
+    line-height: 18px;
+}
+
+.profile-reference-each{
+    display:flex;
+    align-items: center;
+    border-top:1px solid #666;
+    padding:2%;  
+}
+.profile-reference-each-image-container{
+    flex:1;
+    height:250px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.profile-reference-each-image{
+    width:auto;
+    height:auto;
+    max-height:240px;
+    max-width:240px;
+}
+.profile-reference-each-description{
+    flex:1;
+    align-self: flex-start;
+}
+
+.project-info-image{
+    width:30%;
+}
+
+.project-info-edit{
+    width:30px;
+    height:30px;
+
+}

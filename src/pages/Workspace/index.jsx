@@ -7,6 +7,7 @@ import IconAdd from "../../assets/icon-add-white-bold.png";
 import IconDelete from "../../assets/icon-delete.png";
 import Logo from "../../assets/logo.png";
 import "./workspace.css";
+import Loading from "../../components/Loading";
 
 import { Link } from "react-router-dom";
 import firebase from "firebase/app";
@@ -183,7 +184,7 @@ const Workspace = () => {
           </Link>
         </div>
         {fetching.isFetching ? (
-          <div>Loading...</div>
+          <Loading/>
         ) : (
           <div className="projects">{projectsName}</div>
         )}

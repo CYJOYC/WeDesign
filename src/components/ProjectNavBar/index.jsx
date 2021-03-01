@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import ProjectInfo from "../../components/ProjectInfo";
 import ProjectMember from "../../components/TeamMember";
 import IconOpen from "../../assets/icon-open.png";
-
+import "./projectNavBar.css";
 
 const ProjectNavBar = () => {
 

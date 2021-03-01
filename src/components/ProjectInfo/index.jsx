@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import "firebase/storage";
 import { ProjectContext } from "../../contexts/ProjectID";
 import IconEdit from "../../assets/icon-edit.png";
+import "./projectInfo.css";
 
 const ProjectInfo = () => {
   const context = useContext(ProjectContext);
@@ -36,24 +37,28 @@ const ProjectInfo = () => {
     // const URL = context.project.data.referenceImages[0].downloadURL;
     projectProfile = (
       <>
-        <div className="project-info-part1">
+       
           <div className="project-info-name">
-            <b>Project name:</b>&nbsp;{context.project.data.name}
+            <b>Project Name:</b>&nbsp;{context.project.data.name}
           </div>
           <div className="project-info-purpose">
-            <b>Project format:</b>&nbsp;{context.project.data.purpose}
+            <b>Project Purpose:</b>&nbsp;{context.project.data.purpose}
           </div>
           <div className="project-info-format">
-            <b>Project format:</b>&nbsp;{projectFormat}
+            <b>Project Format:</b>&nbsp;{projectFormat}
           </div>
-        </div>
-        <div className="project-info-part2">
-          <b>Project reference picture:</b>
+          <div className="project-info-images">
+            <b>Project Reference Picture:</b>
+          </div>
+          
+     
+       
+          
           <div className="profile-reference-images">
             {referencesAll}
             {/* <img className="project-info-image" src={URL} /> */}
           </div>
-        </div>
+       
         {/* <img className="project-info-edit" src={IconEdit} /> */}
       </>
     );
