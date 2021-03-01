@@ -1,0 +1,141 @@
+/* Workspace */
+
+.workspace{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #fdf5e6;
+}
+
+
+.projects{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+}
+
+.project-each{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 4% 1.76%;
+    width: 22.8%;
+    height: 22.8vw;
+    border-radius: 5px;
+    box-shadow: 3px 3px 6px #666;
+}
+
+.project-background{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    flex:1;
+    color:#fff;
+    background-color: #fff;
+}
+
+.project-image-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex:1;
+    padding-top:8px;
+}
+
+.project-picture{
+    max-width: 94%;
+    max-height: 90%;
+}
+
+.project-name{
+    align-self: center;
+    text-align: center;
+    max-width: 94%;
+    margin: 2% 0% 4% 0%;
+    text-decoration: none;
+    color: #000;
+    
+}
+
+.delete-project{
+    width:16px;
+    z-index: 100;
+    margin-bottom: -18px;
+    margin-right: 2px;
+    align-self: flex-end;
+    background-color: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+
+
+
+.add-project-background{
+    display: flex;
+    flex-direction: row-reverse;
+    align-self: flex-end;
+    margin: 2% 1.76% 2% 0%;
+}
+.add-project{
+    display:flex;
+    justify-content: center;
+    text-align: center;
+    line-height: 40px;
+    color:#fff;
+    text-decoration: none;
+    border-radius: 5px;
+    background-color: #D63864;
+    box-shadow: 1px 1px 2px #666;
+}
+.icon-add{
+    width:20px;
+    height:20px;
+    margin: 10px;
+}
+.text-add {
+    margin-right: 10px;
+}
+
+.warning-text{
+    font-size:12px;
+    color:red;
+}
+
+
+.add-project:hover{
+    cursor: pointer;
+    /* opacity: 80%; */
+    background-color: #990033;
+    /* background: -webkit-linear-gradient(#FF9999, #fff);
+    background: -o-linear-gradientgradient(#FF9999, #fff);
+    background: -moz-linear-gradientgradient(#FF9999, #fff);
+    background: linear-gradientgradient(#FF9999, #fff); */
+}
+
+.nav-bar{
+    width: 100%;
+    height: 40px;
+    background-color: #990033;
+    color: #fff;
+    line-height: 40px;
+}
+
+.nav-bar-item{
+    display:flex;
+    list-style-type: none;
+    margin: 0;
+    
+    text-decoration: none;
+}
+.workspace-direct{
+    text-decoration: none;
+   color: #fff;
+    cursor: pointer;
+    margin-right:2%;
+    font-weight: bold;
+}
