@@ -1,0 +1,118 @@
+/* main picutre */
+
+.landing-main {
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    background-color:#D63864;
+}
+
+.landing-0, .landing-1, .landing-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 150px;
+
+}
+
+.landing-image-0 {
+    position: absolute;
+    width: auto;
+    max-width: 50%;
+}
+
+.landing-text-0 {
+    z-index:100;
+    position: relative;
+    top:170px;
+    text-align: center;
+    font-size: 80px;
+    font-weight: bold;
+}
+
+.landing-scroll-down{
+    width:40px;
+    position: relative;
+    top: 500px;
+    animation: scrollDown;
+	animation-duration: 2s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+}
+
+@keyframes scrollDown {
+	0% {
+		opacity: 1;
+		transform: translateY(0) ;
+	}
+
+	50% {
+		opacity: 0;
+		transform: translateY(10px) ;
+	}
+
+	75% {
+		opacity: 0;
+		transform: translateY(0) ;
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0) ;
+	}
+}
+
+.landing-image-1, .landing-image-2 {
+    max-width:85%;
+    max-height: 85%;
+    width: auto;
+    height: auto;
+    box-shadow: 3px 3px 6px #990033;
+}
+
+.landing-text-1, .landing-text-2 {
+    font-size: 24px;
+    margin-top: 100px;
+    line-height: 36px;
+    text-align: center;
+    color: #fff;
+}
+.landing-start {
+    text-decoration: none;
+    margin-top: 60px;
+}
+
+.landing-start-btn {
+    border: none;
+    background: none;
+    border-radius: 5px;
+    background-color: #D63864;
+    text-align: center;
+    font-size: 20px;
+    color: #fff;
+    box-shadow: 0px 0px 2px 2px pink;
+    padding: 8px 20px;
+    cursor: pointer;
+    animation: startNow;
+	animation-duration: 10s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+}
+
+@keyframes startNow {
+	0% {
+        box-shadow: 0px 0px 3px 3px pink;
+	}
+
+	50% {
+        box-shadow: 0px 0px 2px 2px pink;
+	}
+
+	75% {
+        box-shadow: 0px 0px 3px 3px pink;
+	}
+
+	100% {
+        box-shadow: 0px 0px 2px 2px pink;
+	}
+}
