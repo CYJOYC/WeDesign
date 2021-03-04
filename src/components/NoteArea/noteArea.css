@@ -14,13 +14,12 @@
     margin:5px 5px 5px 0;
     max-height:300px;
     overflow-y: auto;
-
 }
 
-::-webkit-scrollbar {
-  width: 2px;
+.each-note::-webkit-scrollbar {
+  width: 5px;
 }
-::-webkit-scrollbar-thumb {
+.each-note::-webkit-scrollbar-thumb {
   background: pink; 
   border-radius: 10px;
 }
@@ -34,6 +33,7 @@
     display:flex;
     justify-content: space-between;
     padding:5%;
+    cursor: pointer;
 }
 
 .note-check-status,

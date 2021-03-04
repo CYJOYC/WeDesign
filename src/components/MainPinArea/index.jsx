@@ -1,13 +1,8 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import firebase from "firebase/app";
 import "firebase/storage";
 import { VersionContext } from "../../contexts/Version";
 import { UserContext } from "../../contexts/AuthContext";
-import ProjectInfo from "../ProjectInfo";
-import PropTypes from "prop-types";
-import Pin from "../../assets/icon-pin-noborder.png";
-import SelectedPin from "../../assets/icon-pin-highlight.png";
-import { callbackify } from "util";
 import clsx from "clsx";
 import "./mainPinArea.css";
 
@@ -48,10 +43,17 @@ const MainPinArea = ({
       pinStatus: !isPinOn.pinStatus,
       cursorDisplay: isPinOn.pinStatus ? "auto" : "crosshair"
     });
+    setShowAllPins({
+      isAllPinsShown: true
+    })
   };
 
   const handlePinClick = pinId => () => {
-    setSelectedPin(pinId);
+    if (selectedPin === pinId) {
+      setSelectedPin('');
+    } else {
+      setSelectedPin(pinId);
+    }
   };
 
   const handlePinOnPicture = e => {
@@ -63,10 +65,6 @@ const MainPinArea = ({
       const y = e.clientY - rect.top;
       const relativeX = (x / rectWidth) * 100;
       const relativeY = (y / rectHeight) * 100;
-      // console.log(pins);
-      // setNewPin({isNewPin:true,relativeY,createdTime:Date.now()});
-
-      // props.onClick();
 
       const dbLinkForPins = db.collection("projectPins").doc(projectID);
       dbLinkForPins
@@ -102,6 +100,10 @@ const MainPinArea = ({
         }
       ]);
       console.log(relativeX, relativeY);
+      setIsPinOn({
+        pinStatus: !isPinOn.pinStatus,
+        cursorDisplay: isPinOn.pinStatus ? "auto" : "crosshair"
+      });
     } else {
       return;
     }
@@ -119,7 +121,6 @@ const MainPinArea = ({
       console.log(selectedPin);
       const eachPinPosition = filteredPins.map(filteredPin => (
         <div
-          // className="each-pin"
           className={clsx("each-pin", {
             selected: selectedPin === filteredPin.createdTime
           })}
@@ -128,15 +129,10 @@ const MainPinArea = ({
             position: "absolute",
             top: `${filteredPin.relativeY}%`,
             left: `${filteredPin.relativeX}%`
-            // width: "10px",
-            // height: "10px",
-            // backgroundColor: "#000",
-            // backgroundImage:{Pin}
           }}
           onClick={handlePinClick(filteredPin.createdTime)}
         >
           <div className="pin"/>
-          {/* <img src={Pin} className="pin" /> */}
         </div>
       ));
       allPinsPosition = <>{eachPinPosition}</>;
@@ -207,14 +203,5 @@ const MainPinArea = ({
     </div>
   );
 };
-
-// MainPinArea.prototype = {
-//   isPins:PropTypes.bool.isRequired,
-//   pins:PropTypes.array.isRequired,
-//   isNewPin: PropTypes.bool.isRequired,
-//   setNewPin: PropTypes.func,
-//   setPins: PropTypes.func.isRequired,
-//   onClick: PropTypes.func.isRequired,
-// }
 
 export default MainPinArea;

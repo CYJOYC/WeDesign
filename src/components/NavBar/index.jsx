@@ -9,6 +9,7 @@ import { ProjectContext } from "../../contexts/ProjectID";
 
 const NavBar = () => {
   const context = useContext(ProjectContext);
+  const setProject = context.setProject;
 
   //   const [projects, setProjects] = useState(null);
   //const [projectID, setProjectID] = useState([{ id: "" }]);
@@ -46,12 +47,17 @@ const NavBar = () => {
     console.log(context);
     projectPath = <li>/&nbsp;{context.project.data.name}</li>;
   }
+
+  const clearProjectName = () => {
+    setProject(null)
+  }
+
   return (
     <React.Fragment>
       <div className="nav-bar">
         <ul className="nav-bar-item">
-          <Link to="/Workspace" className="workspace-direct">
-            <li>Workspace</li>
+          <Link to="/Workspace" className="workspace-direct" >
+            <li onClick={clearProjectName}>Workspace</li>
           </Link>
           {projectPath}
         </ul>

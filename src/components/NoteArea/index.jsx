@@ -4,8 +4,6 @@ import firebase from "firebase/app";
 import "firebase/storage";
 import { VersionContext } from "../../contexts/Version";
 import { UserContext } from "../../contexts/AuthContext";
-import ProjectInfo from "../ProjectInfo";
-import PropTypes from "prop-types";
 import Unchecked from "../../assets/icon-uncheck-pink.png";
 import Checked from "../../assets/icon-check-pink.png";
 import Delete from "../../assets/icon-delete.png";
@@ -29,27 +27,31 @@ const NoteArea = ({
   const creator = userContext.userInfo.displayName;
   const creatorPicture = userContext.userInfo.photoURL;
 
-  const handleNote = e => {
-    e.preventDefault();
-    console.log(e.currentTarget.key.value);
-    const checkValue = Number(e.currentTarget.key.value);
-
+  const findPinIndex = checkValue => {
     let pinIndex;
     for (let i = 0; i < pins.length; i++) {
       if (pins[i]["createdTime"] === checkValue) {
         pinIndex = i;
       }
     }
-    console.log(pinIndex);
+    return pinIndex;
+  };
 
-    const saveToDB = newPins => {
-      const dbLinkForPins = db.collection("projectPins").doc(projectID);
-      dbLinkForPins
-        .set({ pins: newPins }, { merge: true })
-        .catch(function(error) {
-          console.error("Error writing document: ", error);
-        });
-    };
+  const saveToDB = newPins => {
+    const dbLinkForPins = db.collection("projectPins").doc(projectID);
+    dbLinkForPins
+      .set({ pins: newPins }, { merge: true })
+      .catch(function(error) {
+        console.error("Error writing document: ", error);
+      });
+  };
+
+  const handleNote = e => {
+    e.preventDefault();
+    // console.log(e.currentTarget.key.value);
+    const checkValue = Number(e.currentTarget.key.value);
+    let pinIndex = findPinIndex(checkValue);
+    
 
     if (pins[pinIndex].notes == undefined) {
       const newPin = {
@@ -63,11 +65,11 @@ const NoteArea = ({
           }
         ]
       };
-      console.log(newPin);
+      // console.log(newPin);
       const newPins = Array.from(pins);
-      console.log(newPins);
+      // console.log(newPins);
       newPins.splice(pinIndex, 1, newPin);
-      console.log(newPins);
+      // console.log(newPins);
       setPins(newPins);
       saveToDB(newPins);
     } else {
@@ -79,34 +81,18 @@ const NoteArea = ({
         note: e.currentTarget.opinion.value,
         writtenTime: Date.now()
       });
-      console.log(newPin);
+      // console.log(newPin);
       newPins.splice(pinIndex, 1, newPin);
-      console.log(newPins[0].notes);
+      // console.log(newPins[0].notes);
       setPins(newPins);
       saveToDB(newPins);
     }
+    e.currentTarget.reset();
   };
 
   const handleCheck = checkValue => {
-    let pinIndex;
-    for (let i = 0; i < pins.length; i++) {
-      if (pins[i]["createdTime"] === checkValue) {
-        pinIndex = i;
-      }
-    }
-    console.log(pinIndex);
-
-    const saveToDB = newPins => {
-      const dbLinkForPins = db.collection("projectPins").doc(projectID);
-      dbLinkForPins
-        .set({ pins: newPins }, { merge: true })
-        .catch(function(error) {
-          console.error("Error writing document: ", error);
-        });
-    };
-
+    let pinIndex = findPinIndex(checkValue);
     const newPins = Array.from(pins);
-
     const newPin = {
       ...pins[pinIndex],
       checked: !pins[pinIndex].checked
@@ -118,23 +104,7 @@ const NoteArea = ({
   };
 
   const deleteNote = checkValue => {
-    let pinIndex;
-    for (let i = 0; i < pins.length; i++) {
-      if (pins[i]["createdTime"] === checkValue) {
-        pinIndex = i;
-      }
-    }
-    console.log(pinIndex);
-
-    const saveToDB = newPins => {
-      const dbLinkForPins = db.collection("projectPins").doc(projectID);
-      dbLinkForPins
-        .set({ pins: newPins }, { merge: true })
-        .catch(function(error) {
-          console.error("Error writing document: ", error);
-        });
-    };
-
+    let pinIndex = findPinIndex(checkValue);
     const newPins = Array.from(pins);
     newPins.splice(pinIndex, 1);
     setPins(newPins);
@@ -142,7 +112,11 @@ const NoteArea = ({
   };
 
   const handlePinClick = (pinId) => () => {
-    setSelectedPin(pinId);
+    if (selectedPin === pinId) {
+      setSelectedPin('');
+    } else {
+      setSelectedPin(pinId);
+    }
   }
 
   let allNotes;
@@ -158,9 +132,9 @@ const NoteArea = ({
             selected: selectedPin === filteredPin.createdTime
           })}
           key={filteredPin.createdTime}
-          onClick={handlePinClick(filteredPin.createdTime)}
+          
         >
-          <div className="note-instruction" >
+          <div className="note-instruction" onClick={handlePinClick(filteredPin.createdTime)}>
             {filteredPin.checked ? (
               <div className="note-check-status">
                 <img
