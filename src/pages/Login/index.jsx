@@ -1,23 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { withRouter } from "react-router";
+import { useHistory } from "react-router-dom";
 import firebase from "firebase/app";
-import * as firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
 import "firebase/auth";
 import "firebase/firestore";
 import firebaseConfig from "../../firebase.config.js";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import memberBackground from "../../assets/member1.jpeg";
 import googleIcon from "../../assets/google-icon.png";
-import CanvasLogo from "../../assets/logo.png";
 import { UserContext } from "../../contexts/AuthContext";
+
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
 const Login = () => {
+  let history = useHistory();
   const context = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,6 +27,7 @@ const Login = () => {
     onSignin: true
   });
   const provider = new firebase.auth.GoogleAuthProvider();
+  
 
   const handleClickRegister = event => {
     event.preventDefault();
@@ -35,51 +36,31 @@ const Login = () => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(registerEmail, registerPassword)
+      .then((userCredential) => {
+        console.log(userCredential);
+        
+      })
       .catch(function(error) {
-        alert(error);
+        console.log(error);
       });
-    // .then(() => {
-    //   const actionCodeSettings = {
-    //     url: "http://localhost:3000/workspace",
-    //     handleCodeInApp: true
-    //   };
-
-    //   firebase
-    //     .auth()
-    //     .sendSignInLinkToEmail(registerEmail, actionCodeSettings)
-    //     .then(function() {
-    //       console.log(context.user);
-    //       context.setUser({
-    //         isLoggedIn: !context.user.isLoggedIn,
-    //         user: { name: "ply" }
-    //       });
-    //       // The link was successfully sent. Inform the user.
-    //       // Save the email locally so you don't need to ask the user for it again
-    //       // if they open the link on the same device.
-    //       window.localStorage.setItem("emailForSignIn", email);
-    //     })
-    //     .catch(function(error) {
-    //       console.log(error);
-    //       // Some error occurred, you can inspect the code: error.code
-    //     });
-    // });
-
     setRegisterEmail("");
     setRegisterPassword("");
+    history.push('/workspace');
   };
 
-  const handleClickLogin = event => {
+  const handleClickLogin = (event) => {
     event.preventDefault();
-    console.log(email, password);
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        history.push('/workspace');
+      })
       .catch(function(error) {
         console.log(error);
       });
     setEmail("");
     setPassword("");
-    window.location.href = "/workspace";
   };
 
   const handleGoogleSignin = () => {
@@ -87,12 +68,7 @@ const Login = () => {
       .auth()
       .signInWithPopup(provider)
       .then(function(result) {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        var token = result.credential.accessToken;
-        // The signed-in user info.
-        var user = result.user;
-        // ...
-        window.location.href = "/workspace";
+        history.push('/workspace');
       })
       .catch(function(error) {
         console.log(error);

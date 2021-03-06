@@ -3,6 +3,7 @@ import { ProjectContext } from "../../contexts/ProjectID";
 import { UserContext } from "../../contexts/AuthContext";
 import firebase from "firebase/app";
 import "firebase/storage";
+import "./teamMember.css";
 
 const ProjectMember = () => {
   const context = useContext(UserContext);
@@ -23,7 +24,6 @@ const ProjectMember = () => {
   let projectMembersList;
   if (projectContext.project !== null){
     if (projectContext.project.data.members.length != 0){
-      console.log(projectContext.project.data.members);
       const eachProjectMember = projectContext.project.data.members.map(member => (
         <div className="project-member-data" key={member.uid}>
           <img className="project-member-picture" src={member.photoURL} />
@@ -42,7 +42,6 @@ const ProjectMember = () => {
 
   const handleInvitationSumbit = e => {
     e.preventDefault();
-    console.log(e.currentTarget.invitedEmail.value);
     const userRef = db.collection("users");
     const projectRef = db.collection("projects").doc(projectID);
     const query = userRef.where(
@@ -59,21 +58,20 @@ const ProjectMember = () => {
         .get()
         .then(function(doc) {
           if (doc.exists) {
-            console.log(doc.data().projects);
             const projects = Array.from(doc.data().projects);
             if (projects.includes(projectID) === false) {
               projects.push(projectID);
             }else{
               setInputCheck({
                 warning:
-                  "The member is already invited."
+                  "The member is already included in this project."
               });
             }
             userRef.set({ projects }, { merge: true });
             projectRef.get().then(function(doc){
               const members = Array.from(doc.data().members);
-              if (members.includes(friendData) === false) {
-                console.log(friendData)
+              const creator = doc.data().creator;
+              if (members.includes(friendData) === false && friendData.uid !== creator) {
                 members.push(friendData);
               }
               projectRef.set({...doc.data(), members}, {merge:true});
@@ -93,7 +91,6 @@ const ProjectMember = () => {
             warning:
               "There's no record of this member. Please check again, or invite him/her to sign up."
           });
-          console.log("No such document!");
         } else {
           querySnapshot.forEach(function(doc) {
             addTeamMember(doc);
@@ -101,7 +98,6 @@ const ProjectMember = () => {
         }
       });
     };
-
     findDocID();
   };
 
@@ -142,10 +138,6 @@ const ProjectMember = () => {
           <div className="project-member-container">
             <div className="project-member-label">Project Member:</div>
             {projectMembersList}
-            {/* <div className="project-member-data">
-              <img className="project-member-picture" src={userPicture} />
-              <div className="project-member-name">{userName}</div>
-            </div> */}
           </div>
         </div>
       </div>

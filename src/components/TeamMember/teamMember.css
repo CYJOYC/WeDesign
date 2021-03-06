@@ -1,0 +1,76 @@
+/* invitation */
+
+.team-member-container{
+    display:flex;
+    width:100%;
+    padding:2%;
+    height:30%;
+}
+
+.input-invited-email{
+    margin:4% 3%;
+    border: none;
+    padding: 9px 15px;
+    background: #f5f6f7;
+    color: #444;
+    -webkit-box-shadow: inset 0px 2px 3px rgba(0,0,0,0.03);
+    box-shadow: inset 0px 2px 3px rgba(0,0,0,0.03);
+    outline: none;
+    width:50%;
+}
+
+.invite-submit{
+    box-sizing: border-box;
+    background: #D63864;
+    border: none;
+    padding: 8px;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.invitation-input-warning{
+    font-size:12px;
+    color:#D63864;
+    margin:0 20% 0 10%;
+}
+
+.team-member-invitation{
+    flex:1;
+}
+
+.project-member-list{
+    display:flex;
+    flex:1;
+}
+
+.project-member-container,
+.project-creator-container{
+    flex:1;
+}
+
+.project-creator-data,
+.project-member-data{
+    display:flex;
+    align-items: center;
+    margin:8% 0;
+    
+}
+
+.project-creator-picture,
+.project-member-picture{
+    width:30px;
+    height:30px;
+    margin-right:1%;
+    border-radius: 50%;
+    display:inline-block;
+}
+
+.project-creator-name,
+.project-member-name{
+    display:inline-block;
+    line-height:30px;
+    margin-left:2%;
+}
+
+

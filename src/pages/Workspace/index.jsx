@@ -84,27 +84,35 @@ const Workspace = () => {
   useEffect(() => {
     async function fetchProjects() {
       if (userID !== "") {
+        
         const userRef = db.collection("users").doc(userID);
+        
         const userDoc = await userRef.get();
-        const userProjects = await Promise.all(
-          userDoc.data().projects.map(async projectID => {
-            const projectRef = db.collection("projects").doc(projectID);
-            const projectDoc = await projectRef.get();
-            const id = projectDoc.id;
-            const {  name, versionImages } = projectDoc.data();
-            console.log(id, name, versionImages);
-            return {
-              id,
-              name,
-              image: versionImages
-                ? versionImages[versionImages.length - 1]
-                : ""
-            };
-          })
-        );
-        console.log(userProjects);
-        setProjects({ projectsData: userProjects });
-        setFetching({ isFetching: false });
+        if (!userDoc.exists) {
+          setProjects({ projectsData: [] });
+          setFetching({ isFetching: false });
+        } else {
+          const projectsData = await userDoc.data().projects
+          const userProjects = await Promise.all(
+            projectsData.map(async projectID => {
+              const projectRef = db.collection("projects").doc(projectID);
+              const projectDoc = await projectRef.get();
+              const id = projectDoc.id;
+              const {  name, versionImages } = projectDoc.data();
+              console.log(id, name, versionImages);
+              return {
+                id,
+                name,
+                image: versionImages
+                  ? versionImages[versionImages.length - 1]
+                  : ""
+              };
+            })
+          );
+          console.log(userProjects);
+          setProjects({ projectsData: userProjects });
+          setFetching({ isFetching: false });
+        }
       }
     }
     fetchProjects();
