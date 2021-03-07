@@ -11,41 +11,7 @@ import UserContextProvider, { UserContext } from "../src/contexts/AuthContext";
 import ProjectContextProvider from "../src/contexts/ProjectID";
 import VersionContextProvider from "../src/contexts/Version";
 import PrivateRoute from "./components/PrivateRoute";
-
-// const App = () => {
-//   return (
-//     <UserContextProvider>
-//       <ProjectContextProvider>
-//         <VersionContextProvider>
-//           <BrowserRouter>
-//             <Switch>
-//               <Route exact path="/">
-//                 <Landing/>
-//               </Route>
-//               <Route exact path="/login">
-//                 <Login/>
-//                 </Route>
-
-//                 <Route exact path="/survey">
-//                 <Survey/>
-//               </Route>
-//               <Route exact path="/canvas">
-//                 <Canvas/>
-//                 </Route>
-
-//               <RequireAuth>
-//                 {/* <Workspace/> */}
-//               {/* <Route exact path="/workspace" component={Workspace} /> */}
-//               </RequireAuth>
-              
-//             </Switch>
-//           </BrowserRouter>
-//         </VersionContextProvider>
-//       </ProjectContextProvider>
-//     </UserContextProvider>
-//   );
-// }
-// export default App;
+import ScrollToTop from "./components/ScrollToTop";
 
 
 export default class App extends React.Component {
@@ -57,12 +23,14 @@ export default class App extends React.Component {
           <VersionContextProvider>
             <BrowserRouter>
               <Switch>
+                <ScrollToTop>
                 <Route exact path="/" component={Landing} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/workspace" component={Workspace} />
                 {/* <PrivateRoute exact path="/workspace" component={Workspace} /> */}
                 <Route exact path="/survey" component={Survey} />
                 <Route exact path="/canvas" component={Canvas} />
+                </ScrollToTop>
               </Switch>
             </BrowserRouter>
           </VersionContextProvider>
