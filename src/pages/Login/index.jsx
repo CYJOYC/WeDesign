@@ -10,7 +10,7 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import googleIcon from "../../assets/google-icon.png";
 import { UserContext } from "../../contexts/AuthContext";
-
+import "./login.css";
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();

@@ -1,6 +1,4 @@
 /* version area */
-
-
 .version-each{
     display:flex;
     flex-direction: column;
@@ -9,23 +7,19 @@
     background-color: #fff;
     box-shadow: 3px 3px 6px #666;
     margin: 10px;
-    min-height:240px;
+    cursor: pointer;
 }
 
 .version-name{
     font-size:12px;
-    margin-top: 10px;
+    margin: 10px 10px;
 }
 
 .version-image{
     width:auto;
     height:auto;
     max-width:90%;
-    max-height:180px;
+    max-height:90%;
     padding:10px;
 }
-
-/* .version-number{
-    margin:5px 20%;
-} */
 

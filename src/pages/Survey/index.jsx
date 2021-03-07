@@ -2,20 +2,19 @@ import React, { useState, useRef, useContext } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
-import UnsplashPopup from "../../components/UnsplashPopup";
 import firebase from "firebase/app";
 import "firebase/storage";
-import { Prompt } from "react-router";
 import IconDelete from "../../assets/icon-delete.png";
 import IconQuestion from "../../assets/icons8-help-grey.png";
 import Popup from "reactjs-popup";
 import { UserContext } from "../../contexts/AuthContext";
+import "./survey.css";
 
 const Survey = () => {
   const db = firebase.firestore();
   const fileInputEl = useRef(null);
   const context = useContext(UserContext);
-  const userUid = context.uid;
+  const [imageURLs, setImageURLs] = useState([]);
   let warning;
 
   const handleSubmit = e => {
@@ -32,7 +31,6 @@ const Survey = () => {
     }));
 
     const creator = context.userInfo.uid;
-    console.log(e.currentTarget.name.value, e.currentTarget.name.value.length);
 
     if (
       e.currentTarget.name.value.length != 0 &&
@@ -62,13 +60,6 @@ const Survey = () => {
                 ).then(() => {
                   window.location.href = "/canvas?" + ref.id;
                 });
-                // if (doc.data().projects == null) {
-                //   userRef.set({ projects: [ref.id] }, { merge: true });
-                // } else {
-                //   const projectsArray = Array.from(doc.data().projects);
-                //   projectsArray.push(ref.id);
-                //   userRef.set({ projects: projectsArray }, { merge: true });
-                // }
               } else {
                 // doc.data() will be undefined in this case
                 console.log("No such document!");
@@ -86,50 +77,6 @@ const Survey = () => {
       alert("Please limit the project name whithin 20 characters");
     }
   };
-
-  const handleSaveLeave = e => {
-    e.preventDefault();
-
-    const format = Array.from(e.currentTarget.type)
-      .filter(type => type.checked)
-      .map(type => type.value);
-
-    const referenceImages = imageURLs.map(imageURL => ({
-      downloadURL: imageURL.downloadURL,
-      fileName: imageURL.fileName,
-      note: e.currentTarget[`note-${imageURL.fileName}`].value
-    }));
-
-    const creator = context.userInfo.uid;
-    console.log(e.currentTarget.name.value, e.currentTarget.name.value.length);
-
-    if (
-      e.currentTarget.name.value.length != 0 &&
-      e.currentTarget.name.value.length <= 20
-    ) {
-      db.collection("projects")
-        .add({
-          creator,
-          members:[],
-          createdTime: Date.now(),
-          name: e.currentTarget.name.value,
-          purpose: e.currentTarget.purpose.value,
-          format,
-          referenceImages
-        })
-        .then(ref => {
-          window.location.href = "/workspace";
-        });
-    }
-    if (e.currentTarget.name.value.length == 0) {
-      alert("Project name is required to create a project");
-    }
-    if (e.currentTarget.name.value.length > 20) {
-      alert("Please limit the project name whithin 20 characters");
-    }
-  };
-
-  const [imageURLs, setImageURLs] = useState([]);
 
   const uploadFile = e => {
     const file = e.currentTarget.files[0];
@@ -157,8 +104,6 @@ const Survey = () => {
         }
       },
       function(error) {
-        // A full list of error codes is available at
-        // https://firebase.google.com/docs/storage/web/handle-errors
         switch (error.code) {
           case "storage/unauthorized":
             // User doesn't have permission to access the object
@@ -184,7 +129,18 @@ const Survey = () => {
     );
   };
 
-  const deleteReference = imageKey => () => {};
+  const deleteReference = imageKey => () => {
+    console.log(imageKey)
+    let imageIndex;
+    for (let i = 0; i < imageURLs.length; i++) {
+      if (imageURLs[i].fileName === imageKey) {
+        imageIndex =  i;
+      }
+    }
+    let newImages = Array.from(imageURLs);
+    newImages.splice(imageIndex, 1);
+    setImageURLs(newImages);
+  };
 
   let uploadImages;
   if (imageURLs.length !== 0) {
@@ -212,7 +168,7 @@ const Survey = () => {
             />
           </div>
           <div className="survey-upload-picture-explanation">
-            <label>Notes</label>
+            <label className="survey-upload-picture-explanation-label">Notes</label>
             <textarea
               type="text"
               name={`note-${imageURL.fileName}`}
@@ -226,16 +182,10 @@ const Survey = () => {
     uploadImages = <>{uploadImage}</>;
   }
 
-  const [unsplashPopup, setUnsplashPopup] = useState({
-    isPopup: false,
-    display: "none"
-  });
-
   return (
     <React.Fragment>
       <Header />
       <NavBar />
-      {/* <UnsplashPopup style={{display:unsplashPopup.display}}/> */}
       <div className="survey-page">
         <div className="survey-container">
           <form className="survey-questions" onSubmit={handleSubmit}>
@@ -379,9 +329,6 @@ const Survey = () => {
               </Popup>
             </label>
             <div className="upload-from-local">
-              <label className="upload-title" htmlFor="uploadFromLocal">
-                Upload from own device
-              </label>
               <input
                 ref={fileInputEl}
                 type="file"
@@ -390,54 +337,17 @@ const Survey = () => {
                 onChange={uploadFile}
               />
             </div>
-            <Popup
-              trigger={
-                <div className="upload-from-unsplash upload-title">
-                  Upload from Unsplash
-                </div>
-              }
-              position="right center"
-              modal
-            >
-              <div>Popup content here !!</div>
-            </Popup>
-            {/* <div className="upload-from-unsplash upload-title" >
-              Upload from Unsplash
-            </div> */}
             <br />
 
             {uploadImages}
-
-            {/* <label
-              htmlFor="member"
-              className="survey-title project-member-invite"
-            >
-              Project Team Member
-              <Popup
-                trigger={<img className="tooltip-icon" src={IconQuestion} />}
-                position="right bottom"
-                on="hover"
-              >
-                <div className="tooltip-context">
-                  Invite related members by their accont email to authorize them
-                  to see and edit project
-                </div>
-              </Popup>
-            </label>
-            <input type="text" name="member" className="survey-input" /> */}
 
             <div className="survey-buttons">
               <input
                 type="reset"
                 value="Reset"
                 className="survey-button survey-button-reset"
+                onClick={() => setImageURLs([])}
               />
-              <button
-                className="survey-button survey-button-save"
-                onClick={handleSaveLeave}
-              >
-                Save and leave
-              </button>
               <input
                 type="submit"
                 value="Submit to Create"
@@ -446,8 +356,6 @@ const Survey = () => {
             </div>
           </form>
         </div>
-
-        {/* <progress value="0" max="100" className="uploader">0%</progress> */}
       </div>
 
       <Footer />

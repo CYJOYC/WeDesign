@@ -1,0 +1,236 @@
+/* Survey Page */
+
+.survey-page{
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #fdf5e6;
+    justify-content: center;
+}
+
+
+.survey-container{
+    display: flex;
+    justify-content: center;
+    padding: 5%;
+    width: 50%;
+    margin: 5% 0;
+    background-color:#fff;
+    box-shadow: 3px 3px 6px #666;
+}
+
+@media (max-width: 1200px) {
+    .survey-container {
+        width: 60%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .survey-container {
+        width: 70%;
+    }
+}
+
+.survey-questions{
+    width:80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.survey-instruction{
+    font-size: 26px;
+    margin-bottom: 30px;
+
+}
+
+.survey-title{
+    font-size: 16px;
+    /* margin: 5px 0; */
+}
+
+.type-label{
+    flex:1;
+    display:flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.tooltip-icon{
+    margin-left:1%;
+    width:12px;
+    height:12px;
+    align-self: flex-start;
+}
+
+.tooltip-context{
+    font-size:12px;
+}
+
+.survey-input{
+    border: none;
+    padding: 9px 15px;
+    /* background: #f5f6f7; */
+    background: bisque;
+    color: #444;
+    -webkit-box-shadow: inset 0px 2px 3px rgba(0,0,0,0.03);
+    box-shadow: inset 0px 2px 3px rgba(0,0,0,0.03);
+    outline: none;
+    margin: 10px 0 30px 0;
+    width:95%;
+}
+
+.survey-input-textarea{
+    border: none;
+    font-family: 'Inter', sans-serif;
+    max-width:95%;
+    min-width:95%;
+    /* height:20%; */
+    height:150px;
+    padding: 9px 15px;
+    /* background: #f5f6f7; */
+    background: bisque;
+    color: #444;
+    -webkit-box-shadow: inset 0px 2px 3px rgba(0,0,0,0.03);
+    box-shadow: inset 0px 2px 3px rgba(0,0,0,0.03);
+    outline: none;
+    margin: 10px 0 30px 0;
+}
+
+.survey-radio-options{
+    display:flex;
+    justify-content: space-between;
+    width:50%;
+    padding: 0 15px;
+    margin: 10px 0 30px 0; 
+}
+
+.survey-upload-file,
+.upload-title{
+    padding: 0 15px;
+    margin: 10px 0 30px 0;
+}
+
+.upload-from-unsplash{
+    padding-top:5px;
+}
+
+.survey-buttons{
+    display: flex;
+    justify-content: space-around;
+    flex:1;
+    width:100%;
+}
+
+.survey-button{
+    align-self: flex-end;
+    width:48%;
+    box-sizing: border-box;
+    background: #D63864;
+    border: none;
+    padding: 12px;
+    font-size:15px;
+    color: #fff;
+    cursor: pointer;
+    margin-bottom: 5%;
+    outline: none;
+    border-radius: 5px;
+    box-shadow: 1px 1px 2px #666;
+}
+
+.survey-button-submit:hover{
+    background:#990033;
+}
+
+.survey-button-reset,
+.survey-button-save{
+    background: #D63864;
+    opacity: 40%;
+}
+
+.survey-button-reset:hover,
+.survey-button-save:hover{
+    opacity: 100%;
+}
+
+.each-upload-picture-container{
+    display: flex;
+    flex-direction: column;
+    padding:1% 2%;
+    border-top: 1px solid #f5f6f7;
+    border-bottom: 1px solid #f5f6f7;
+    border-radius: 7px;
+    margin-bottom: 5%;
+}
+
+.each-upload-title{
+    display:flex;
+    flex-direction: row;
+    margin: 10px 0;
+}
+
+.delete-upload-container{
+    flex:1;
+    display:flex;
+    justify-content: flex-end;
+}
+
+.delete-upload-picture{
+    width:20px;
+    height:20px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.each-upload-details{
+    flex:1;
+    display:flex;
+    flex-direction: column;
+    /* flex-direction: row;
+    justify-content: space-between; */
+}
+
+.upload-picture-container{
+    /* width:50%; */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.upload-picture{
+    max-height: 350px;
+    max-width:90%;
+    height:auto;
+    width:auto;
+}
+
+.upload-picture:hover{
+    transform: scale(2);
+    z-index: 100;
+    cursor: pointer;
+}
+
+.survey-upload-picture-explanation{
+    /* width:45%; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex:1;
+}
+
+.survey-upload-picture-explanation-label{
+    margin: 10px 0;
+}
+
+.survey-explanation-textarea{
+    /* flex:1; */
+    height:150px;
+    font-family: 'Inter', sans-serif;
+    border: none;
+    /* background: #f5f6f7; */
+    background: bisque;
+    color: #444;
+    -webkit-box-shadow: inset 0px 2px 3px rgba(0,0,0,0.03);
+    box-shadow: inset 0px 2px 3px rgba(0,0,0,0.03);
+    outline: none;
+}

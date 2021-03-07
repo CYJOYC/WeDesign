@@ -1,0 +1,34 @@
+/* footer */
+
+.footer {
+    display: block;
+    bottom: 0px;
+    width: 100%;
+    height: 200px;
+    background-color: #000;
+}
+
+.footer-nav {
+    display: flex;
+    justify-content: space-evenly;
+    width: 60%;
+    height: 200px;
+    margin: 0 auto;
+    align-items: center;
+    color: #fff;
+}
+
+.footer-logo {
+    width: 60px;
+    height: 60px;
+}
+
+@media (max-width: 767.98px) {
+    .footer {
+        height:250px;
+    }
+    .footer-nav  {
+        flex-direction: column;
+        height:100%;
+    }
+}

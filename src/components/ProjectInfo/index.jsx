@@ -38,16 +38,16 @@ const ProjectInfo = () => {
     projectProfile = (
       <>
        
-          <div className="project-info-name">
+          <div className="project-info-name project-info-item">
             <b>Project Name:</b>&nbsp;{context.project.data.name}
           </div>
-          <div className="project-info-purpose">
+          <div className="project-info-purpose project-info-item">
             <b>Project Purpose:</b>&nbsp;{context.project.data.purpose}
           </div>
-          <div className="project-info-format">
+          <div className="project-info-format project-info-item">
             <b>Project Format:</b>&nbsp;{projectFormat}
           </div>
-          <div className="project-info-images">
+          <div className="project-info-images project-info-item">
             <b>Project Reference Picture:</b>
           </div>
           <div className="profile-reference-images">

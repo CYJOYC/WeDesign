@@ -2,9 +2,11 @@
 
 .team-member-container{
     display:flex;
-    width:100%;
+    width:90%;
     padding:2%;
     height:30%;
+    font-size:16px;
+    margin: 0 auto;
 }
 
 .input-invited-email{
@@ -30,7 +32,7 @@
 }
 
 .invitation-input-warning{
-    font-size:12px;
+    font-size:16px;
     color:#D63864;
     margin:0 20% 0 10%;
 }

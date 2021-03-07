@@ -174,7 +174,7 @@ const NoteArea = ({
                   <div className="each-context" key={note.writtenTime}>
                     <div className="note-writer">
                       <img
-                        src={creatorPicture}
+                        src={note.creatorPicture}
                         className="note-writer-picture"
                       />
                       <div className="note-writer-name">{note.creator}</div>

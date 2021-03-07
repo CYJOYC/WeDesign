@@ -49,7 +49,9 @@ const Header =()=> {
               <Link to="/workspace" className="nav-item">Workspace</Link>
               <div className="status-container">
                 <div className="profile">
-                  <img src={context.userInfo.photoURL} className="user-photo"/>{context.userInfo.displayName}
+                  {context.userInfo.photoURL !== null? 
+                  <><img src={context.userInfo.photoURL} className="user-photo"/>{context.userInfo.displayName}</>
+                  : <div>{context.userInfo.email}</div>}
                   <Submenu/>
                 </div>
             
