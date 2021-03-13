@@ -73,7 +73,6 @@ const VersionList = () => {
         // Upload completed successfully, now we can get the download URL
         uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
           console.log("File available at", downloadURL);
-          // console.log(versionImages);
           const dbLink = db.collection("projects").doc(projectID);
           dbLink
             .set(
@@ -108,27 +107,6 @@ const VersionList = () => {
     );
   };
 
-  // const checkVersion = URL => {
-  //   console.log(URL);
-  //   versionContext.setShowVersion(URL);
-  // };
-
-  // let versionPart;
-  // if (versionImages.length != 0) {
-  //   const versionPartEach = versionImages.map(versionImage => (
-  //     <div className="version-each" key={versionImage.imageURL}>
-  //       <div className="version-name">{versionImage.fileName}</div>
-  //       {/* <div className="version-date">{versionImage.uploadedTime}</div> */}
-  //       <img
-  //         src={versionImage.imageURL}
-  //         className="version-image"
-  //         onClick={checkVersion.bind(checkVersion, versionImage.imageURL)}
-  //       />
-  //     </div>
-  //   ));
-  //   versionPart = <>{versionPartEach}</>;
-  // }
-
   return (
     <React.Fragment>
       <div
@@ -157,9 +135,7 @@ const VersionList = () => {
             />
           ))}
         </div>
-        
       </div>
-      {/* <div className="version-control-button" onClick={handleVersionShow} /> */}
     </React.Fragment>
   );
 };

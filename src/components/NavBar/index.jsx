@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Survey } from "../../pages/Survey";
+import React, { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import firebase from "firebase/app";
 import { ProjectContext } from "../../contexts/ProjectID";
@@ -11,8 +10,6 @@ const NavBar = () => {
   const context = useContext(ProjectContext);
   const setProject = context.setProject;
 
-  //   const [projects, setProjects] = useState(null);
-  //const [projectID, setProjectID] = useState([{ id: "" }]);
   let projectID = null;
   if (location.search.length == 21) {
     projectID = location.search.slice(1);
@@ -43,7 +40,6 @@ const NavBar = () => {
 
   let projectPath;
   if (context.project !== null){
-//   if (location.search !== null) {
     console.log(context);
     projectPath = <li>/&nbsp;{context.project.data.name}</li>;
   }
@@ -62,7 +58,6 @@ const NavBar = () => {
           {projectPath}
         </ul>
       </div>
-      {/* <Survey addTitle={addTitle}/> */}
     </React.Fragment>
   );
 };

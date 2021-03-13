@@ -29,14 +29,46 @@
     font-weight: bold;
 }
 
+
+
 .landing-scroll-down{
     width:40px;
     position: relative;
-    top: 500px;
+    top: 450px;
     animation: scrollDown;
 	animation-duration: 2s;
 	animation-iteration-count: infinite;
 	animation-timing-function: ease-in-out;
+}
+
+@media (max-width: 998px) {
+    .landing-text-0  {
+        top:100px;
+        font-size:90px;
+    }
+    .landing-scroll-down {
+        top: 280px;
+    }
+}
+
+@media (max-width: 750px) {
+    .landing-text-0  {
+        top:60px;
+        font-size:70px;
+    }
+    .landing-scroll-down {
+        top: 260px;
+    }
+}
+
+@media (max-width: 414px) {
+    .landing-text-0  {
+        top:30px;
+        font-size:50px;
+    }
+    .landing-scroll-down {
+        top: 150px;
+    }
 }
 
 @keyframes scrollDown {

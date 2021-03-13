@@ -1,7 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import "firebase/storage";
 import { ProjectContext } from "../../contexts/ProjectID";
-import IconEdit from "../../assets/icon-edit.png";
 import "./projectInfo.css";
 
 const ProjectInfo = () => {
@@ -9,9 +8,6 @@ const ProjectInfo = () => {
 
   let projectProfile;
   if (context.project !== null) {
-    //   if (location.search !== null) {
-    console.log(context);
-
     const projectFormat = context.project.data.format.toString();
     const referencesImages = context.project.data.referenceImages;
     const referenceEach = referencesImages.map(referencesImage => (
@@ -34,7 +30,6 @@ const ProjectInfo = () => {
     ));
     const referencesAll = <>{referenceEach}</>;
 
-    // const URL = context.project.data.referenceImages[0].downloadURL;
     projectProfile = (
       <>
        
@@ -52,10 +47,8 @@ const ProjectInfo = () => {
           </div>
           <div className="profile-reference-images">
             {referencesAll}
-            {/* <img className="project-info-image" src={URL} /> */}
           </div>
        
-        {/* <img className="project-info-edit" src={IconEdit} /> */}
       </>
     );
   }

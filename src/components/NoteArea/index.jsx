@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import clsx from "clsx";
 import firebase from "firebase/app";
 import "firebase/storage";
@@ -81,9 +81,7 @@ const NoteArea = ({
         note: e.currentTarget.opinion.value,
         writtenTime: Date.now()
       });
-      // console.log(newPin);
       newPins.splice(pinIndex, 1, newPin);
-      // console.log(newPins[0].notes);
       setPins(newPins);
       saveToDB(newPins);
     }
@@ -124,7 +122,6 @@ const NoteArea = ({
     const filteredPins = pins.filter(pin => {
       return pin.version == versionContext.showVersion;
     });
-    //   console.log(`this is filtered ${filteredPins}`);
     if (filteredPins.length != 0) {
       const eachInput = filteredPins.map(filteredPin => (
         <div
@@ -161,7 +158,6 @@ const NoteArea = ({
               </div>
             )}
 
-            {/* <label className="note-instruction-text">Note for the pin</label> */}
             <img
               className="note-delete"
               src={Delete}

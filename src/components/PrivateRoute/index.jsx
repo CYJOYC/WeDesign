@@ -28,25 +28,3 @@ const PrivateRoute = ({ component: Component, ...otherProps }) => {
 }
 
 export default PrivateRoute;
-
-// const RequireAuth = ({ children, ...rest }) => {
-//     const context = useContext(UserContext);
-//     const isLoggedIn = context.userInfo.isLoggedIn;
-
-    
-//     return (
-//         <>
-//         {isLoggedIn? <Route exact path="/workspace"><Workspace/></Route>
-//         :<Redirect to={{ pathname: "/" }} />}
-//         </>
-       
-
-//     //     <Route {...rest} render={({ location }) =>
-//     //     isLoggedIn ? (children) :
-//     //     (<Redirect to={{ pathname: '/', state: { from: location } }} />)
-//     //   }
-//     // />
-//     )
-// }
-
-// export default RequireAuth;

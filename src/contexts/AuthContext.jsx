@@ -1,9 +1,7 @@
-import React, { createContext, Component, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import firebase from "firebase/app";
 export const UserContext = createContext();
 import "firebase/storage";
-import { Route } from "react-router-dom";
-import { withRouter, Redirect } from "react-router";
 const UserContextProvider = props => {
   const db = firebase.firestore();
   const user = firebase.auth().currentUser;
@@ -20,12 +18,10 @@ const UserContextProvider = props => {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(function(user) {
-      console.log("check in");
       if (user) {
         const dbLinkForUsers = db.collection("users").doc(user.uid);
         dbLinkForUsers.get().then(function(doc){
           if(doc.exists){
-            console.log("user exists")
             return
           }else{
             let displayName;
@@ -65,7 +61,7 @@ const UserContextProvider = props => {
         )
         
       } else {
-        console.log("check out");
+        // console.log("check out");
       }
     });
   }, []);

@@ -4,17 +4,10 @@ html {
     height: 100%;
 }
 
-
 body {
     margin: 0;
     font-family: 'Inter', sans-serif;
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* height:100%; */
-    /* position:relative; */
 }
-
-
 
 /* Unsplash */
 
@@ -26,32 +19,18 @@ body {
     background-color: #D63864;
 }
 
-
 /* Canvas */
 
 .canvas-page{
     display:flex;
     flex-direction:column;
     width:100%;
-
 }
-
-
-
-/* canvas */
 
 .canvas{
     flex:1;
-    display:flex;
-   
-    
+    display:flex;    
 }
-
-
-
-
-
-
 
 .hide {
     display: none;

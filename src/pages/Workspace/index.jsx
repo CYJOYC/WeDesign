@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import NavBar from "../../components/NavBar";
-import DemoPicture from "../../assets/index-picture-1.jpeg";
 import IconAdd from "../../assets/icon-add-white-bold.png";
 import IconDelete from "../../assets/icon-delete.png";
 import Logo from "../../assets/logo.png";
@@ -26,61 +25,6 @@ const Workspace = () => {
     projectID = location.search.slice(1);
   }
   let projectsList;
-
-  // const getProjectsData = new Promise((i)) => {
-
-  // }
-
-  // useEffect(() => {
-  //   // let projectsData = [];
-  //   async function getProjectData(){
-
-  //     const userRef = db.collection("users").doc(userID);
-  //     userRef
-  //       .get()
-  //       .then(function(doc) {
-  //         let projectsData = [];
-  //         projectsList = Array.from(doc.data().projects);
-  //         for (let i = 0; i < projectsList.length; i++) {
-  //           const projectRef = db.collection("projects").doc(projectsList[i]);
-  //           projectRef.get().then(function(doc) {
-  //             if (doc.exists) {
-  //               if (doc.data().versionImages !== undefined) {
-  //                 const versionImagesIndex = doc.data().versionImages.length;
-  //                 projectsData.push({
-  //                   id: doc.id,
-  //                   name: doc.data().name,
-  //                   project: doc.data().versionImages[versionImagesIndex - 1]
-  //                 });
-  //                 console.log(projectsData);
-  //                 // return projectsData
-  //                 // setProjects({ projectsData })
-  //               } else {
-  //                 projectsData.push({ id: doc.id, name: doc.data().name, project: "" });
-  //                 console.log(projectsData);
-  //                 // return projectsData
-  //                 // setProjects({ projectsData })
-  //               }
-  //             }
-  //             console.log("1")
-
-  //             const setProjectsData = await setProjectsData(projectsData);
-  //           });
-  //         }
-  //       })
-
-  //   }
-
-  //   if (userID !== ""){
-  //     getProjectData();
-  //   }
-
-  //       .then(projectsData => setProjects({ projectsData }))
-  //       .then(() => console.log('done'))
-  //       .then(() => setFetching({ isFetching: false }));
-
-  // }, [userContext]);
-
   useEffect(() => {
     async function fetchProjects() {
       if (userID !== "") {
@@ -148,9 +92,9 @@ const Workspace = () => {
   let projectsName;
   if (!fetching.isFetching) {
     // projectsName="hello"
-    console.log("projects.projectsData");
-    console.log(projects.projectsData);
-    console.log(fetching.isFetching);
+    // console.log("projects.projectsData");
+    // console.log(projects.projectsData);
+    // console.log(fetching.isFetching);
     const projectName = projects.projectsData.map(project => (
       <div className="project-each" key={project.id}>
         <img
