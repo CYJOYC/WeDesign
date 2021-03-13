@@ -5,7 +5,7 @@ import firebase from "firebase/app";
 import "firebaseui/dist/firebaseui.css";
 import "firebase/auth";
 import "firebase/firestore";
-import firebaseConfig from "../../firebase.config.js";
+import firebaseConfig from "../../firebase.config.js/index.js.js";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import googleIcon from "../../assets/google-icon.png";
