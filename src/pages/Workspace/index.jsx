@@ -28,7 +28,6 @@ const Workspace = () => {
   useEffect(() => {
     async function fetchProjects() {
       if (userID !== "") {
-        console.log(userID)
         const userRef = db.collection("users").doc(userID);
         
         const userDoc = await userRef.get();
@@ -43,7 +42,6 @@ const Workspace = () => {
               const projectDoc = await projectRef.get();
               const id = projectDoc.id;
               const {  name, versionImages } = projectDoc.data();
-              console.log(id, name, versionImages);
               return {
                 id,
                 name,
@@ -53,7 +51,6 @@ const Workspace = () => {
               };
             })
           );
-          console.log(userProjects);
           setProjects({ projectsData: userProjects });
           setFetching({ isFetching: false });
         }
@@ -65,7 +62,6 @@ const Workspace = () => {
 
   const findProjectIndex = id => {
     let projectIndex;
-    console.log(projects.projectsData)
     for (let i = 0; i < projects.projectsData.length; i++) {
       if (projects.projectsData[i] === id) {
         projectIndex = i
@@ -75,26 +71,26 @@ const Workspace = () => {
   }
 
   const deleteProject = id => () => {
-    // db.collection("projects")
-    //   .doc(id)
-    //   .delete()
-    //   .then(function() {
-    //     console.log("successfully deleted");
-    //   })
-    //   .catch(function(error) {
-    //     console.log(error);
-    //   });
+    db.collection("projects")
+      .doc(id)
+      .delete()
+      .then(function() {
+        console.log("successfully deleted");
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
 
-    // const projectIndex = findProjectIndex(id);
-    // const newProjects = Array.from(projects.projectsData);
-    // newProjects.splice(projectIndex, 1)
-    // const dbLinkForUserProjects = db.collection("users").doc(userID)
-    // dbLinkForUserProjects
-    // .set({projects: newProjects}, {merge: true})
-    // .catch(function(error) {
-    //   console.error("Error writing document: ", error);
-    // });
-    // setProjects({ projectsData: newProjects })
+    const projectIndex = findProjectIndex(id);
+    const newProjects = Array.from(projects.projectsData);
+    newProjects.splice(projectIndex, 1)
+    const dbLinkForUserProjects = db.collection("users").doc(userID)
+    dbLinkForUserProjects
+    .set({projects: newProjects}, {merge: true})
+    .catch(function(error) {
+      console.error("Error writing document: ", error);
+    });
+    setProjects({ projectsData: newProjects })
 
 
     // projectContext.setProject(null);
@@ -116,10 +112,6 @@ const Workspace = () => {
 
   let projectsName;
   if (!fetching.isFetching) {
-    // projectsName="hello"
-    // console.log("projects.projectsData");
-    // console.log(projects.projectsData);
-    // console.log(fetching.isFetching);
     const projectName = projects.projectsData.map(project => (
       <div className="project-each" key={project.id}>
         <img
