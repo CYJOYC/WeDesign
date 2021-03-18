@@ -28,7 +28,7 @@ const Workspace = () => {
   useEffect(() => {
     async function fetchProjects() {
       if (userID !== "") {
-        
+        console.log(userID)
         const userRef = db.collection("users").doc(userID);
         
         const userDoc = await userRef.get();
@@ -62,31 +62,56 @@ const Workspace = () => {
     fetchProjects();
   }, [userContext]);
 
-  const deleteProject = id => () => {
-    db.collection("projects")
-      .doc(id)
-      .delete()
-      .then(function() {
-        console.log("successfully deleted");
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-    projectContext.setProject(null);
-    const projectsRef = db.collection("projects");
 
-    projectsRef
-      .orderBy("createdTime")
-      .get()
-      .then(querySnapshot => {
-        let data = [];
-        querySnapshot.forEach(doc => {
-          console.log(doc.data().name);
-          data.push({ id: doc.id, name: doc.data().name, project: doc.data() });
-        });
-        console.log(data);
-        setProjects(data);
-      });
+  const findProjectIndex = id => {
+    let projectIndex;
+    console.log(projects.projectsData)
+    for (let i = 0; i < projects.projectsData.length; i++) {
+      if (projects.projectsData[i] === id) {
+        projectIndex = i
+      }
+    }
+    return projectIndex;
+  }
+
+  const deleteProject = id => () => {
+    // db.collection("projects")
+    //   .doc(id)
+    //   .delete()
+    //   .then(function() {
+    //     console.log("successfully deleted");
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
+
+    // const projectIndex = findProjectIndex(id);
+    // const newProjects = Array.from(projects.projectsData);
+    // newProjects.splice(projectIndex, 1)
+    // const dbLinkForUserProjects = db.collection("users").doc(userID)
+    // dbLinkForUserProjects
+    // .set({projects: newProjects}, {merge: true})
+    // .catch(function(error) {
+    //   console.error("Error writing document: ", error);
+    // });
+    // setProjects({ projectsData: newProjects })
+
+
+    // projectContext.setProject(null);
+    // const projectsRef = db.collection("projects");
+
+    // projectsRef
+    //   .orderBy("createdTime")
+    //   .get()
+    //   .then(querySnapshot => {
+    //     let data = [];
+    //     querySnapshot.forEach(doc => {
+    //       console.log(doc.data().name);
+    //       data.push({ id: doc.id, name: doc.data().name, project: doc.data() });
+    //     });
+    //     console.log(data);
+    //     setProjects(data);
+    //   });
   };
 
   let projectsName;
