@@ -4,7 +4,7 @@ WeDesign is a platform for designers and their clients to collaborate and commun
 * Featuring an instructive survey to friendly guide clients to share their ideas in a more specific and constructive way
 * Providing project management tool to track progress, document changes and discussions, and invite team members
 
-Website link: https://wedesign-4aea8.web.app/
+Website link: https://wedesign-4aea8.firebaseapp.com/
 
 ## Technologies
 
