@@ -48,7 +48,6 @@ const NoteArea = ({
 
   const handleNote = e => {
     e.preventDefault();
-    // console.log(e.currentTarget.key.value);
     const checkValue = Number(e.currentTarget.key.value);
     let pinIndex = findPinIndex(checkValue);
     
@@ -65,11 +64,8 @@ const NoteArea = ({
           }
         ]
       };
-      // console.log(newPin);
       const newPins = Array.from(pins);
-      // console.log(newPins);
       newPins.splice(pinIndex, 1, newPin);
-      // console.log(newPins);
       setPins(newPins);
       saveToDB(newPins);
     } else {
@@ -95,7 +91,6 @@ const NoteArea = ({
       ...pins[pinIndex],
       checked: !pins[pinIndex].checked
     };
-    console.log(newPin);
     newPins.splice(pinIndex, 1, newPin);
     setPins(newPins);
     saveToDB(newPins);

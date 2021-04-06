@@ -18,15 +18,13 @@ const NavBar = () => {
     if (projectID !== null) {
       const db = firebase.firestore();
       const docRef = db.collection("projects").doc(projectID);
-      console.log("should not run")
       docRef
         .get()
         .then(function(doc) {
           if (doc.exists) {
-            console.log("data:", doc.data());
             context.setProject({ data: doc.data() });
           } else {
-            console.log("no data");
+            // console.log("no data");
           }
         })
         .catch(function(error) {
@@ -34,13 +32,12 @@ const NavBar = () => {
         });
        
     } else {
-        console.log("check check")
+        // console.log("check check")
     }
   }, [projectID]);
 
   let projectPath;
   if (context.project !== null){
-    console.log(context);
     projectPath = <li>/&nbsp;{context.project.data.name}</li>;
   }
 

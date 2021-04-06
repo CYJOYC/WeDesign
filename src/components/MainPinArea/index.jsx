@@ -99,7 +99,7 @@ const MainPinArea = ({
           createdTime: Date.now()
         }
       ]);
-      console.log(relativeX, relativeY);
+      // console.log(relativeX, relativeY);
       setIsPinOn({
         pinStatus: !isPinOn.pinStatus,
         cursorDisplay: isPinOn.pinStatus ? "auto" : "crosshair"
@@ -116,9 +116,9 @@ const MainPinArea = ({
     const filteredPins = pins.filter(pin => {
       return pin.version == versionContext.showVersion;
     });
-    console.log(`this is filtered ${filteredPins}`);
+    // console.log(`this is filtered ${filteredPins}`);
     if (filteredPins.length != 0) {
-      console.log(selectedPin);
+      // console.log(selectedPin);
       const eachPinPosition = filteredPins.map(filteredPin => (
         <div
           className={clsx("each-pin", {

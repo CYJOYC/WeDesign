@@ -37,7 +37,6 @@ const Login = () => {
       .auth()
       .createUserWithEmailAndPassword(registerEmail, registerPassword)
       .then((userCredential) => {
-        console.log(userCredential);
         
       })
       .catch(function(error) {

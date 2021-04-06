@@ -53,7 +53,6 @@ const Survey = () => {
             .get()
             .then(function(doc) {
               if (doc.exists) {
-                console.log(doc.data().projects);
                 userRef.set(
                   { projects: [...doc.data().projects, ref.id] },
                   { merge: true }
@@ -121,7 +120,6 @@ const Survey = () => {
       function() {
         // Upload completed successfully, now we can get the download URL
         uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-          console.log("File available at", downloadURL);
           setImageURLs([...imageURLs, { downloadURL, fileName: file.name }]);
           fileInputEl.current.value = null;
         });
@@ -130,7 +128,6 @@ const Survey = () => {
   };
 
   const deleteReference = imageKey => () => {
-    console.log(imageKey)
     let imageIndex;
     for (let i = 0; i < imageURLs.length; i++) {
       if (imageURLs[i].fileName === imageKey) {

@@ -127,7 +127,10 @@
     animation: startNow;
 	animation-duration: 10s;
 	animation-iteration-count: infinite;
-	animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
 }
 
 @keyframes startNow {

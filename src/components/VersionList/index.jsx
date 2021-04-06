@@ -72,7 +72,7 @@ const VersionList = () => {
       function() {
         // Upload completed successfully, now we can get the download URL
         uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-          console.log("File available at", downloadURL);
+          // console.log("File available at", downloadURL);
           const dbLink = db.collection("projects").doc(projectID);
           dbLink
             .set(
